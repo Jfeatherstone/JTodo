@@ -5,7 +5,8 @@ This is just a simple CLI-based todo list made in Java. It is heavily inspired b
 https://github.com/aesophor/py-todo
 
 
-[OPTIONS]
+# [OPTIONS]
+
 -a [n] -d [d]   -- Add a task n due in d days
 
 -r [n]          -- Remove the nth task
