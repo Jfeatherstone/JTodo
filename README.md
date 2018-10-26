@@ -20,3 +20,5 @@ https://github.com/aesophor/py-todo
 -h              -- Help and information
 
 -v              -- Version info
+
+-o              -- Order by due date
