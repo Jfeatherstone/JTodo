@@ -12,7 +12,7 @@ import java.util.Calendar;
 public class Todo {
 
 	public static final String FILE_PATH = "list.txt";
-	public static final double VERSION = 1.0;
+	public static final double VERSION = 1.1;
 	
 	
 	public static void main(String[] args) {
@@ -225,6 +225,18 @@ public class Todo {
 					
 					printList(date);
 					break;
+				case "o": /****** ORDER *******/
+					Task[] arr = readList(false);
+					insertSort(arr);
+					String[] sArr = new String[arr.length];
+					for (int h = 0; h < sArr.length; h++) {
+						sArr[h] = arr[h].toString();
+					}
+					
+					writeList(sArr);
+					printList(date);
+					
+					break;
 				}
 			} else {
 				// Invalid input
@@ -283,7 +295,7 @@ public class Todo {
 				System.out.println("Nothing to do... :)");
 			} else {
 				int i = 0;
-				System.out.println();
+				System.out.println("******* TODO LIST *******");
 				for (Task t: tasks) {
 					t.printTask(i, date.get(Calendar.DAY_OF_YEAR));
 					i++;
@@ -317,7 +329,23 @@ public class Todo {
 						 + "-e [n] [d]	--	Extend the nth task's due date by d days\n"
 						 + "-p [n]		--	Priorize the nth task, moving it to the top of the list\n"
 						 + "-c 		--  Clear all entries in the list\n"
+						 + "-o		--	Order all of the entries in the list by due date\n"
 						 + "-h		--	Show help\n"
 						 + "-v		-- 	Show version");
 	}
+	
+	public static void insertSort(Task[] arr) {
+		int n = arr.length;
+		Task tmp = null;
+		 
+		for (int i = 1; i < n; i++) {
+			for (int j = i; j > 0; j--) {
+				if (arr[j - 1].getYearDayDue() > arr[j].getYearDayDue()) {
+					tmp = arr[j];
+					arr[j] = arr[j-1];
+					arr[j-1] = tmp;
+				}
+			}
+		}
+}
 }

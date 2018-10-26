@@ -24,6 +24,10 @@ public class Task {
 		yearDayDue += numDays;
 	}
 	
+	public int getYearDayDue() {
+		return yearDayDue;
+	}
+	
 	public String getDaysUntilDue(int dayOfYear) {
 		if (yearDayDue - dayOfYear > 2)
 			return yearDayDue - dayOfYear + " days";
