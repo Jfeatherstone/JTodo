@@ -39,11 +39,29 @@ public class Task {
 			return "Past Due!";
 	}
 	
-	public void printTask(int index, int dayOfYear) {
-		if (yearDayDue != -1)
-			System.out.println(index + 1 + ". " + description + " (" + getDaysUntilDue(dayOfYear) + ")");
-		else
-			System.out.println(index + 1 + ". " + description);
+	public void printTask(int index, int dayOfYear, boolean enableColor) {
+		if (enableColor) {
+			/*
+			 * Currently only rainbow mode is implemented for printing modes
+			 */
+			
+			if (yearDayDue != -1)
+				System.out.println(JTodo.ANSI_RAINBOW[index % JTodo.ANSI_RAINBOW.length] +
+						(index + 1) + ". " + description + " (" + getDaysUntilDue(dayOfYear) + ")" + 
+						JTodo.ANSI_RESET);
+			else
+				System.out.println(JTodo.ANSI_RAINBOW[index % JTodo.ANSI_RAINBOW.length] + 
+						(index + 1) + ". " + description +
+						JTodo.ANSI_RESET);
+
+		} else {
+
+			if (yearDayDue != -1)
+				System.out.println(index + 1 + ". " + description + " (" + getDaysUntilDue(dayOfYear) + ")");
+			else
+				System.out.println(index + 1 + ". " + description);
+			
+		}
 	}
 	
 	private String[] splitBySlash(String str) {
