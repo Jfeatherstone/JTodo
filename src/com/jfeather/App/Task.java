@@ -46,13 +46,13 @@ public class Task {
 			 */
 			
 			if (yearDayDue != -1)
-				System.out.println(JTodo.ANSI_RAINBOW[index % JTodo.ANSI_RAINBOW.length] +
+				System.out.println(Color.ANSI_RAINBOW[index % Color.ANSI_RAINBOW.length] +
 						(index + 1) + ". " + description + " (" + getDaysUntilDue(dayOfYear) + ")" + 
-						JTodo.ANSI_RESET);
+						Color.ANSI_RESET);
 			else
-				System.out.println(JTodo.ANSI_RAINBOW[index % JTodo.ANSI_RAINBOW.length] + 
+				System.out.println(Color.ANSI_RAINBOW[index % Color.ANSI_RAINBOW.length] + 
 						(index + 1) + ". " + description +
-						JTodo.ANSI_RESET);
+						Color.ANSI_RESET);
 
 		} else {
 

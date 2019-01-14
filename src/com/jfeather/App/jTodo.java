@@ -10,27 +10,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
 
-public class JTodo {
+public class jTodo {
 	
-	/*
-	 * The following declarations are for defining colored text in a terminal that supports it
-	 * We use these as follows:
-	 * System.out.println(ANSI_RED + "some red text" + ANSI_RESET);
-	 * 
-	 * By default, color printing will be disabled, but the first time run process should hopefully deal with this properly
-	 * and alert the user how to enable color
-	 */
-	public static final String ANSI_RESET = "\u001B[0m";
-	public static final String ANSI_BLACK = "\u001B[30m";
-	public static final String ANSI_RED = "\u001B[31m";
-	public static final String ANSI_GREEN = "\u001B[32m";
-	public static final String ANSI_YELLOW = "\u001B[33m";
-	public static final String ANSI_BLUE = "\u001B[34m";
-	public static final String ANSI_PURPLE = "\u001B[35m";
-	public static final String ANSI_CYAN = "\u001B[36m";
-	public static final String ANSI_WHITE = "\u001B[37m";
-	
-	public static final String[] ANSI_RAINBOW = {ANSI_RED, ANSI_YELLOW, ANSI_GREEN, ANSI_BLUE, ANSI_PURPLE};
 	
 	public static boolean enableColor = false;
 	
@@ -55,9 +36,7 @@ public class JTodo {
 	public static void main(String[] args) {
 		
 		// Read in properties like whether or not we want to enable color, etc.
-		readProperties();
-		System.out.println("Color option: " + enableColor);
-		System.out.println(Arrays.toString(args));
+		Config.readProperties();
 		
 		// Create our calendar for dates and such
 		Calendar date = Calendar.getInstance();
@@ -186,11 +165,11 @@ public class JTodo {
 							}
 						} else 
 							todoTask += "/-";
-						Task[] previousTasks = readList(false);
+						Task[] previousTasks = List.read(false);
 						String[] stringTasks = null;;
 						
 						if (previousTasks == null) {
-							writeList(new String[] {todoTask});
+							List.write(new String[] {todoTask});
 							
 						} else {
 						
@@ -201,7 +180,7 @@ public class JTodo {
 								i++;
 							}
 							stringTasks[stringTasks.length - 1] = todoTask;
-							writeList(stringTasks);
+							List.write(stringTasks);
 						}
 						System.out.println("Task added!");
 						
@@ -214,7 +193,7 @@ public class JTodo {
 					try {
 						
 						int index = Integer.parseInt(args[1]);
-						Task[] tasks = readList(false);
+						Task[] tasks = List.read(false);
 						
 						String[] newTasks = new String[tasks.length - 1];
 						
@@ -227,7 +206,7 @@ public class JTodo {
 							}
 							newTasks[h-offset] = tasks[h].toString();
 						}
-						writeList(newTasks);
+						List.write(newTasks);
 						// Decide on what to say for removing the task
 						System.out.println(FINISHED_TASKS[new Random().nextInt(FINISHED_TASKS.length)]);
 						
@@ -247,7 +226,7 @@ public class JTodo {
 						
 						index = (Integer.parseInt(args[1])) - 1;
 						foundIndex = true;
-						Task[] tasks = readList(false);
+						Task[] tasks = List.read(false);
 						
 						int extension = (Integer.parseInt(args[2]));
 						foundExtension = true;
@@ -260,7 +239,7 @@ public class JTodo {
 							newTasks[h] = tasks[h].toString();
 						}
 						
-						writeList(newTasks);
+						List.write(newTasks);
 						System.out.println("Task extended!");
 						
 						printList(date);
@@ -294,7 +273,7 @@ public class JTodo {
 								}
 								
 								// Now write the new task
-								Task[] tasks = readList(false);
+								Task[] tasks = List.read(false);
 								tasks[index].extendDueDate(day - tasks[index].getYearDayDue() + date.get(Calendar.DAY_OF_YEAR) - 1);
 								
 								String[] newTasks = new String[tasks.length];
@@ -303,7 +282,7 @@ public class JTodo {
 									newTasks[h] = tasks[h].toString();
 								}
 								
-								writeList(newTasks);
+								List.write(newTasks);
 								System.out.println("Task extended!");
 								
 								printList(date);
@@ -322,7 +301,7 @@ public class JTodo {
 					try {
 						
 						index = (Integer.parseInt(args[1])) - 1;
-						Task[] tasks = readList(false);
+						Task[] tasks = List.read(false);
 						
 						
 						String[] newTasks = new String[tasks.length];
@@ -335,7 +314,7 @@ public class JTodo {
 							}
 							newTasks[h] = tasks[h - offset].toString();
 						}
-						writeList(newTasks);
+						List.write(newTasks);
 						System.out.println("Task prioritized!");
 						
 						printList(date);
@@ -357,20 +336,20 @@ public class JTodo {
 				case "c":
 					/****** CLEAR *******/
 					
-					writeList(new String[] {});
+					List.write(new String[] {});
 					
 					printList(date);
 					break;
 				case "o":
 					/****** ORDER *******/
-					Task[] arr = readList(false);
+					Task[] arr = List.read(false);
 					insertSort(arr);
 					String[] sArr = new String[arr.length];
 					for (int h = 0; h < sArr.length; h++) {
 						sArr[h] = arr[h].toString();
 					}
 					
-					writeList(sArr);
+					List.write(sArr);
 					printList(date);
 					
 					break;
@@ -385,157 +364,19 @@ public class JTodo {
 		}
 	}
 	
-	public static Task[] readList(boolean print) {
+	
 		
-		try {
-			FileReader fr = new FileReader(FILE_PATH);
-			BufferedReader br = new BufferedReader(fr);
-			String line;
-			ArrayList<String> lines = new ArrayList<>();
-			while ((line = br.readLine()) != null) {
-				// This will ignore comments (#) and config properties (:)
-				if (line.length() > 0) {
-					if (!line.trim().substring(0, 1).equals("#") && !line.trim().substring(0, 1).equals(":")) {
-						lines.add(line);
-					}
-				}
-			}
-			
-			Task[] arr = new Task[lines.size()];
-			for (int i = 0; i < arr.length; i++) {
-				arr[i] = new Task(lines.get(i));
-			}
-			
-			br.close();
-			return arr;
-		} catch (IOException ex) {
-			if (print) {
-				if (enableColor)
-					System.out.println(ANSI_RED + "Error reading file! \nFile \"" + ANSI_RESET + ANSI_WHITE + FILE_PATH + ANSI_RESET + ANSI_RED + "\" not found!");
-				else
-					System.out.println("Error reading file! \nFile \"" + FILE_PATH + "\" not found!");
-			}
-		} catch (Exception ex) {
-			//ex.printStackTrace();
-		}
-		return null;
-	}
-	
-	public static void readProperties() {
-		try {
-			FileReader fr = new FileReader(FILE_PATH);
-			BufferedReader br = new BufferedReader(fr);
-			String line;
-			
-			while ((line = br.readLine()) != null) {
-				line = line.trim();
-				if (line.length() >= 1) {
-					// A colon denotes the beginning of a property definition
-					if (line.substring(0, 1).contentEquals(":")) {
-						int index = 1; // We start at one since the first char should be a colon
-
-						// Grab the word before the = sign
-						String word = "";
-						for (int i = 0; i < line.length(); i++) {
-							if (line.substring(i, i+1).equals("=")) {
-								word = line.substring(index, i).trim();
-								index = i;
-								break;
-							}
-						}
-						
-						// This will most of the time just set index2 to the full length of the string, but just in case there is
-						// a line comment, it will catch it
-						int index2 = line.length();
-						for (int i = index + 1; i < line.length(); i++) {
-							if (line.substring(i, i+1).equals("#")) {
-								index2 = i;
-								break;
-							}
-						}
-						
-						// Grab the rest of the line (i.e. whatever is after the equals sign)
-						String value = line.substring(index + 1, index2).trim();
-	
-						switch (word) {
-						case "enable_color":
-							//System.out.println("Found color option: " + value);
-							if (value.toLowerCase().equals("true") || value.toLowerCase().equals(1))
-								enableColor = true;
-							else
-								enableColor = false;
-								
-						}
-					}
-				}
-			}
-			
-			br.close();
-		} catch (IOException ex) {
-			if (enableColor)
-				System.out.println(ANSI_RED + "Error reading properties! \nFile \"" + ANSI_RESET + ANSI_WHITE + FILE_PATH + ANSI_RESET + ANSI_RED + "\" not found!");
-			else
-				System.out.println("Error reading properties! \nFile \"" + FILE_PATH + "\" not found!");
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
-	
-	public static void writeList(String[] arr) {
-		try {
-			FileWriter fw = new FileWriter(FILE_PATH, false);
-			BufferedWriter bw = new BufferedWriter(fw);
-			
-			// Simple disclaimer about editing
-			bw.write("# The following file is generated by JTodo whenever it writes to the file, and user additions will most likely");
-			bw.newLine();
-			bw.write("# be overwritten on next write. To edit settings, use the config generator (todo --mkconfig) (WIP) or specific commands");
-			bw.newLine();
-			bw.write("# that can be found by using \"todo -h\".");
-			bw.newLine();
-			bw.newLine();
-			
-			bw.write("# Todo tasks:");
-			bw.newLine();
-			//System.out.println(arr.length);
-			for (String s: arr) {
-				bw.write(s.toString());
-				bw.newLine();
-			}
-			
-			
-			/*
-			 * Now we write out properties and config settings
-			 */
-			bw.newLine();
-			bw.write("# The config settings for JTodo");
-			bw.newLine();
-			bw.write(":enable_color=" + enableColor + " # Possible values: true or 1 will enable, while false or 0 will disable");
-			
-			bw.flush();
-			bw.close();
-		} catch (Exception ex) {
-			if (enableColor)
-				System.out.println(ANSI_RED + "Error writing to file! \nFile \"" + ANSI_RESET + ANSI_WHITE + FILE_PATH + ANSI_RESET + ANSI_RED + "\" not found!");
-			else
-				System.out.println("Error writing to file! \nFile \"" + FILE_PATH + "\" not found!");
-			//ex.printStackTrace();
-		}
-	}
-	
 	public static void printList(Calendar date) {
 		/*
 		 * This will be relatively simple, but most of the complexity will be due to the different options to print (color, non-color, color-bydate, etc.)
 		 */
 		
-		Task[] tasks = readList(true);
+		Task[] tasks = List.read(true);
 		if (tasks != null) {
 			if (tasks.length == 0) {
 				
 				if (enableColor)
-					System.out.println(ANSI_BLUE + "Nothing to do... :)" + ANSI_RESET);
+					System.out.println(Color.ANSI_BLUE + "Nothing to do... :)" + Color.ANSI_RESET);
 				else
 					System.out.println("Nothing to do... :)");
 
@@ -543,7 +384,7 @@ public class JTodo {
 				int i = 0;
 				
 				if (enableColor)
-					System.out.println(ANSI_BLUE + "******* TODO LIST *******" + ANSI_RESET);
+					System.out.println(Color.ANSI_256_TEST + "******* TODO LIST *******" + Color.ANSI_RESET);
 				else
 					System.out.println("******* TODO LIST *******");
 

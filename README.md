@@ -4,6 +4,7 @@ This is just a simple CLI-based todo list made in Java. It is heavily inspired b
 
 https://github.com/aesophor/py-todo
 
+There is also rudimentary support for colors as of version 1.5
 
 # [OPTIONS]
 
