@@ -1,5 +1,6 @@
 package com.jfeather.App;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -25,8 +26,12 @@ public class jTodo {
 	
 	public static void main(String[] args) {
 		
+		// First we check if the list file exists, and run our wizard if it doesn't
+		if (!(new File(Config.getFilePath()).exists()))
+			Config.makeConfig();
+		
 		// Read in properties like whether or not we want to enable color, etc.
-		Config.readProperties();
+		Config.read();
 		
 		// Create our calendar for dates and such
 		Calendar date = Calendar.getInstance();
@@ -37,7 +42,7 @@ public class jTodo {
 		
 		// First we see if the user just wants to print out the list
 		if (args.length < 1) {
-			// Display the todo stuff
+			// Display the todo tasks and end execution
 			List.print(date);
 		} else {
 			// If we have some arguments
@@ -341,6 +346,11 @@ public class jTodo {
 					
 					List.write(sArr);
 					List.print(date);
+					
+					break;
+				case "-mkconfig":
+					/****** MAKE CONFIG *******/
+					Config.makeConfig();
 					
 					break;
 				default:

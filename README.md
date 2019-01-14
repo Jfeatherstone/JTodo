@@ -7,7 +7,7 @@ https://github.com/aesophor/py-todo
 There is also rudimentary support for colors as of version 1.5
 If you would like to define your own custom colors, the following image from  Haoyi's Programming Blog shows the possible combinations:
 
-![image](https://raw.githubusercontent.com/Jfeatherstone/jTodo/tree/master/codes.jpg)
+![image](https://raw.githubusercontent.com/Jfeatherstone/jTodo/master/codes.jpg)
 
 
 # [OPTIONS]
