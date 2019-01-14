@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class List {
 
@@ -86,5 +87,39 @@ public class List {
 		}
 		return null;
 	}
+	
+	public static void print(Calendar date) {
+		/*
+		 * This will be relatively simple, but most of the complexity will be due to the different options to print (color, non-color, color-bydate, etc.)
+		 */
+		
+		Task[] tasks = List.read(true);
+		if (tasks != null) {
+			if (tasks.length == 0) {
+				
+				if (Config.isColorEnabled())
+					System.out.println(Color.ANSI_BLUE + "Nothing to do... :)" + Color.reset());
+				else
+					System.out.println("Nothing to do... :)");
+
+			} else {
+				int i = 0;
+				
+				if (Config.isColorEnabled())
+					System.out.println(Color.ANSI_256_TEST + "******* TODO LIST *******" + Color.reset());
+				else
+					System.out.println("******* TODO LIST *******");
+
+				for (Task t: tasks) {
+					
+					t.printTask(i, date.get(Calendar.DAY_OF_YEAR));
+										
+					i++;
+				}
+				System.out.println();
+			}
+		}
+	}
+
 
 }

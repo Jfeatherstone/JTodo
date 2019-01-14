@@ -4,6 +4,10 @@ import java.util.Date;
 
 public class Task {
 
+	public static final String[] FINISHED_TASKS = {"There's one less thing to do!", "Good job!",
+			"Another one bites the dust!", "Git 'er done!", "You're doing great!", "Maybe now you can go to sleep!",
+			"Time to binge Netflix for several hours!"};
+	
 	private String description;
 	private int yearDayDue;
 	
@@ -39,8 +43,8 @@ public class Task {
 			return "Past Due!";
 	}
 	
-	public void printTask(int index, int dayOfYear, boolean enableColor) {
-		if (enableColor) {
+	public void printTask(int index, int dayOfYear) {
+		if (Config.isColorEnabled()) {
 			/*
 			 * Currently only rainbow mode is implemented for printing modes
 			 */
@@ -48,11 +52,11 @@ public class Task {
 			if (yearDayDue != -1)
 				System.out.println(Color.ANSI_RAINBOW[index % Color.ANSI_RAINBOW.length] +
 						(index + 1) + ". " + description + " (" + getDaysUntilDue(dayOfYear) + ")" + 
-						Color.ANSI_RESET);
+						Color.reset());
 			else
 				System.out.println(Color.ANSI_RAINBOW[index % Color.ANSI_RAINBOW.length] + 
 						(index + 1) + ". " + description +
-						Color.ANSI_RESET);
+						Color.reset());
 
 		} else {
 

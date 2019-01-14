@@ -1,12 +1,5 @@
 package com.jfeather.App;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -25,11 +18,8 @@ public class jTodo {
 	public enum ColorMode {BY_DATE, BY_GROUP, RAINBOW};
 	
 	public static final String FILE_PATH = "list.txt";
-	public static final double VERSION = 1.5;
+	public static final double VERSION = 1.6;
 	
-	public static final String[] FINISHED_TASKS = {"There's one less thing to do!", "Good job!",
-			"Another one bites the dust!", "Git 'er done!", "You're doing great!", "Maybe now you can go to sleep!",
-			"Time to binge Netflix for several hours!"};
 	
 	public static int[] MONTH_DAYS = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
@@ -48,7 +38,7 @@ public class jTodo {
 		// First we see if the user just wants to print out the list
 		if (args.length < 1) {
 			// Display the todo stuff
-			printList(date);
+			List.print(date);
 		} else {
 			// If we have some arguments
 			// First, we should check to see if we have an option
@@ -184,7 +174,7 @@ public class jTodo {
 						}
 						System.out.println("Task added!");
 						
-						printList(date);
+						List.print(date);
 					}
 					break;
 				case "r":
@@ -208,9 +198,9 @@ public class jTodo {
 						}
 						List.write(newTasks);
 						// Decide on what to say for removing the task
-						System.out.println(FINISHED_TASKS[new Random().nextInt(FINISHED_TASKS.length)]);
+						System.out.println(Task.FINISHED_TASKS[new Random().nextInt(Task.FINISHED_TASKS.length)]);
 						
-						printList(date);
+						List.print(date);
 						
 					} catch (Exception ex) {
 						System.out.println("Invalid task index!");
@@ -242,7 +232,7 @@ public class jTodo {
 						List.write(newTasks);
 						System.out.println("Task extended!");
 						
-						printList(date);
+						List.print(date);
 						
 					} catch (Exception ex) {
 						if (!foundIndex)
@@ -285,7 +275,7 @@ public class jTodo {
 								List.write(newTasks);
 								System.out.println("Task extended!");
 								
-								printList(date);
+								List.print(date);
 
 							} catch (NumberFormatException e) {
 								System.out.println("Invalid date of format \"Month/Day\"!");
@@ -317,7 +307,7 @@ public class jTodo {
 						List.write(newTasks);
 						System.out.println("Task prioritized!");
 						
-						printList(date);
+						List.print(date);
 						
 					} catch (Exception ex) {
 						System.out.println("Invalid task index!");
@@ -338,7 +328,7 @@ public class jTodo {
 					
 					List.write(new String[] {});
 					
-					printList(date);
+					List.print(date);
 					break;
 				case "o":
 					/****** ORDER *******/
@@ -350,7 +340,7 @@ public class jTodo {
 					}
 					
 					List.write(sArr);
-					printList(date);
+					List.print(date);
 					
 					break;
 				default:
@@ -366,38 +356,6 @@ public class jTodo {
 	
 	
 		
-	public static void printList(Calendar date) {
-		/*
-		 * This will be relatively simple, but most of the complexity will be due to the different options to print (color, non-color, color-bydate, etc.)
-		 */
-		
-		Task[] tasks = List.read(true);
-		if (tasks != null) {
-			if (tasks.length == 0) {
-				
-				if (enableColor)
-					System.out.println(Color.ANSI_BLUE + "Nothing to do... :)" + Color.ANSI_RESET);
-				else
-					System.out.println("Nothing to do... :)");
-
-			} else {
-				int i = 0;
-				
-				if (enableColor)
-					System.out.println(Color.ANSI_256_TEST + "******* TODO LIST *******" + Color.ANSI_RESET);
-				else
-					System.out.println("******* TODO LIST *******");
-
-				for (Task t: tasks) {
-					
-					t.printTask(i, date.get(Calendar.DAY_OF_YEAR), enableColor);
-										
-					i++;
-				}
-				System.out.println();
-			}
-		}
-	}
 	
 	public static void printVersion() {
 		// TODO; Fix this up, and add a color version
