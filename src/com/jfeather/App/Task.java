@@ -1,7 +1,5 @@
 package com.jfeather.App;
 
-import java.util.Date;
-
 public class Task {
 
 	public static final String[] FINISHED_TASKS = {"There's one less thing to do!", "Good job!",

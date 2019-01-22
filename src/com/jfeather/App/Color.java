@@ -38,4 +38,5 @@ public class Color {
 	public static String errorColor() {
 		return ANSI_RED;
 	}
+	
 }

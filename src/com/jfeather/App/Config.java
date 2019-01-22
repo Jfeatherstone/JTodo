@@ -19,9 +19,9 @@ public class Config {
 	
 	public enum ColorType {TYPE_8, TYPE_16, TYPE_256};
 	
-	private static boolean enableColor;
-	private static String filePath = "list.txt";
-	private static ColorType colorType;
+	private static boolean enableColor = false; // Default value is disabled for compatability issues
+	private static String filePath = "list.txt"; // This shouldn't ever change as of v1.6
+	private static ColorType colorType = ColorType.TYPE_8; // Default value is lowest number of colors
 	
 	/****************************************
 	 * GETTERS

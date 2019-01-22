@@ -6,9 +6,7 @@ import java.util.Random;
 
 public class jTodo {
 	
-	
-	public static boolean enableColor = false;
-	
+		
 	/*
 	 * Since there are multiple ways to implement colors, we can allow the user to choose which type they would like to use
 	 * The first option, BY_DATE, will group items by the date they are due, as to show the user what is most important to work on
@@ -21,6 +19,59 @@ public class jTodo {
 	public static final String FILE_PATH = "list.txt";
 	public static final double VERSION = 1.6;
 	
+	/*
+	 * AVAILABLE OPTIONS
+	 * 
+	 * -a body [-d date]
+	 * ADD
+	 * Examples:
+	 * -a Some task here 					Create "Some task here" task with no due date
+	 * -a Another task to do -d 5			Create "Another task to do" due in 5 days
+	 * -a "Do some homework" -d 2/1			Create "Do some homework" due on February 1st
+	 * 
+	 * 		This option is the only way to add a new task to the todo list, with an optional parameter to specify
+	 * a due date. By default, a task without a defined expiration date will be displayed with no such parameter
+	 * when the list is printed. The body of the task can be specified in separate arguments (example 1) or in a single
+	 * string (example 3). If you are planning on including escape/special characters in the body, it is recommended to surround
+	 * it in quotes to prevent problems with the shell interfering with the parsing.
+	 * 		If a due date is to be attached to the task, there are two ways to denote a date, either by the days it will be due
+	 * in, or by specifying the date in month/day format. Regardless of which method is used, the date argument should be
+	 * prefaced by "-d". This string will signal the end of the todo body, and thus should be avoided as any part of the body,
+	 * unless it is enclosed by double quotes
+	 * 
+	 * 
+	 * -r index
+	 * REMOVE
+	 * Examples:
+	 * -r 3
+	 * -r 1
+	 * 
+	 * 		This is a pretty straight forward option, where the task at the index specified will be permanently removed from
+	 * the list. The indicies used are what the ones displayed on the screen, and are 1-indexed. This means that the second example will
+	 * remove whatever task is at the top of our list.
+	 * 
+	 * 
+	 * -e index extension
+	 * EXTEND
+	 * Examples:
+	 * -e 1 5
+	 * -e 2 2/28
+	 * -e 1 -2
+	 * 
+	 * 		The extend function will allow the user to change a due date on a previously existing task. The first argument passed to
+	 * the command will be the index of the task we are modifying, and second will be either the numbers of days to extend it or a new
+	 * due date formatted as month/day. The date specified can be before the previous due date to push it forward, and the extension can
+	 * similarly be a negative number to reduce the numbers of days until it is due.
+	 * 
+	 * 
+	 * -p index
+	 * PRIORITIZE
+	 * Examples
+	 * -p 1
+	 * -p 3
+	 * 
+	 * 		
+	 */
 	
 	public static int[] MONTH_DAYS = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
@@ -369,10 +420,10 @@ public class jTodo {
 	
 	public static void printVersion() {
 		// TODO; Fix this up, and add a color version
-		System.out.println( "***** ******  ********  ******    ******** \n"+
-							"   *    **    **    **  **    **  **    ** \n"+
-							"*  *    **    **    **  **    **  **    ** \n"+
-							"****    **    ********  ******    ******** \n"+
+		System.out.println( "    **  ******  ********  ******    ******** \n"+
+							"    **    **    **    **  **    **  **    ** \n"+
+							"**  **    **    **    **  **    **  **    ** \n"+
+							"******    **    ********  ******    ******** \n"+
 							"          Version: " + VERSION);
 
 	}
