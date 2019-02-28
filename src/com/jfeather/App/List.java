@@ -12,7 +12,10 @@ import com.jfeather.App.Config.ColorType;
 
 public class List {
 
-	public static void write(String[] arr) {
+	public static String ACTIVE_INDICATOR = "!Active!";
+	public static String COMPLETED_INDICATOR = "!Completed!";
+	
+	public static void write(String[] currentTasks, String[] completedTasks) {
 		try {
 			FileWriter fw = new FileWriter(Config.getFilePath(), false);
 			BufferedWriter bw = new BufferedWriter(fw);
@@ -28,16 +31,19 @@ public class List {
 			
 			bw.write("# Todo tasks:");
 			bw.newLine();
+			bw.write(ACTIVE_INDICATOR);
+			bw.newLine();
 			//System.out.println(arr.length);
-			for (String s: arr) {
+			for (String s: currentTasks) {
 				bw.write(s.toString());
 				bw.newLine();
 			}
-			
+			bw.write(ACTIVE_INDICATOR);
 			
 			/*
 			 * Now we write out properties and config settings
 			 */
+			bw.newLine();
 			bw.newLine();
 			bw.write("# The config settings for JTodo");
 			bw.newLine();
@@ -52,30 +58,81 @@ public class List {
 			else
 				bw.write(":color_type=8");
 
+			// Now we write the completed tasks
+			bw.newLine();
+			bw.newLine();
+			bw.write(COMPLETED_INDICATOR);
+			bw.newLine();
+			
+			if (completedTasks.length <= 10) {
+				for (String s: completedTasks) {
+					bw.write(s);
+					bw.newLine();
+				}
+			} else {
+				for (int i = 0; i < 10; i++) {
+					bw.write(completedTasks[i]);
+					bw.newLine();
+				}
+			}
+			bw.write(COMPLETED_INDICATOR);
 			
 			bw.flush();
 			bw.close();
-		} catch (Exception ex) {
+		} catch (IOException ex) {
 			if (Config.isColorEnabled())
 				System.out.println(Color.errorColor() + "Error writing to file! \nFile \"" + Color.reset() + Color.ANSI_WHITE + Config.getFilePath() + Color.reset() + Color.errorColor() + "\" not found!");
 			else
 				System.out.println("Error writing to file! \nFile \"" + Config.getFilePath() + "\" not found!");
-			//ex.printStackTrace();
+			
+		} catch (Exception ex) {
+			// Any other errors we should probably check out
+			ex.printStackTrace();
+
 		}
 	}
 	
-	public static Task[] read(boolean print) {
+	/**
+	 * This method will return both the active and recently completed tasks in a two dimensional task array
+	 * The active tasks will always be the first element and the completed will be the second (assuming it didn't catch and error)
+	 * @return A 2D array of active and completed tasks in that order
+	 */
+	public static Task[][] read(boolean print) {
 		
 		try {
 			FileReader fr = new FileReader(Config.getFilePath());
 			BufferedReader br = new BufferedReader(fr);
 			String line;
 			ArrayList<String> lines = new ArrayList<>();
+			ArrayList<String> completedLines = new ArrayList<>();
+			
+			// We need to keep track of whether we are reading the active or completed tasks
+			boolean readingCompleted = false;
+			boolean readingActive = false;
+			
+			// Iterate through every line
 			while ((line = br.readLine()) != null) {
-				// This will ignore comments (#) and config properties (:)
+				
+				// Since there will be an indicator before and after the todos, this should toggle properly
+				if (line.equals(COMPLETED_INDICATOR)) {
+					readingCompleted = !readingCompleted;
+					continue;
+				}
+				
+				if (line.equals(ACTIVE_INDICATOR)) {
+					readingActive = !readingActive;
+					continue;
+				}
+
 				if (line.length() > 0) {
+					// This will ignore comments (#) and config properties (:)
 					if (!line.trim().substring(0, 1).equals("#") && !line.trim().substring(0, 1).equals(":")) {
-						lines.add(line);
+						
+						// Make sure we properly sort whether a task is completed or not
+						if (readingCompleted)
+							completedLines.add(line);
+						if (readingActive)
+							lines.add(line);
 					}
 				}
 			}
@@ -85,8 +142,15 @@ public class List {
 				arr[i] = new Task(lines.get(i));
 			}
 			
+			Task[] completedArr = new Task[completedLines.size()];
+			for (int i = 0; i < completedArr.length; i++) {
+				completedArr[i] = new Task(completedLines.get(i));
+			}
+			
 			br.close();
-			return arr;
+			
+			return new Task[][] {arr, completedArr};
+			
 		} catch (IOException ex) {
 			if (print) {
 				if (Config.isColorEnabled())
@@ -95,17 +159,18 @@ public class List {
 					System.out.println("Error reading file! \nFile \"" + Config.getFilePath() + "\" not found!");
 			}
 		} catch (Exception ex) {
-			//ex.printStackTrace();
+			ex.printStackTrace();
 		}
+		
 		return null;
 	}
-	
+		
 	public static void print(Calendar date) {
 		/*
 		 * This will be relatively simple, but most of the complexity will be due to the different options to print (color, non-color, color-bydate, etc.)
 		 */
 		
-		Task[] tasks = List.read(true);
+		Task[] tasks = List.read(true)[0];
 		if (tasks != null) {
 			if (tasks.length == 0) {
 				
@@ -131,6 +196,31 @@ public class List {
 				System.out.println();
 			}
 		}
+	}
+	
+	public static void printCompleted(Calendar date) {
+		Task[] tasks = List.read(true)[1];
+		int i = 0;
+		if (tasks.length == 0) {
+			System.out.println("No completed tasks...");
+			System.out.println("Better get to work!");
+		} else {
+			System.out.println("******* Completed Tasks *******");
+
+			for (Task t: tasks) {
+				t.printTask(i++, date.get(Calendar.DAY_OF_YEAR));
+			}
+		}
+	}
+	
+	public static String[] taskToStringArr(Task[] arr) {
+		String[] strArr = new String[arr.length];
+		int i = 0;
+		for (Task t: arr) {
+			strArr[i++] = t.toString();
+		}
+		
+		return strArr;
 	}
 
 

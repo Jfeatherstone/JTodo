@@ -39,6 +39,10 @@ public class Config {
 		return colorType;
 	}
 	
+	public static void toggleColor() {
+		enableColor = !enableColor;
+	}
+	
 	/****************************************
 	 * END GETTERS
 	 *****************************************/
@@ -201,17 +205,12 @@ public class Config {
 		
 		System.out.println("\nWell that's about it. Get out there are finish some tasks!");
 		
-		Task[] arr = List.read(false);
+		Task[][] arr = List.read(false);
 		
 		if (arr != null) { // Preserve previous entries
-			String[] strArr = new String[arr.length];
-			int i = 0;
-			for (Task t: arr)
-				strArr[i++] = t.toString();
-			
-			List.write(strArr);
+			List.write(List.taskToStringArr(arr[0]), List.taskToStringArr(arr[1]));
 		} else
-			List.write(new String[] {}); // Empty list
+			List.write(new String[] {}, new String[] {}); // Empty list
 	}
 
 }

@@ -12,18 +12,20 @@ If you would like to define your own custom colors, the following image from  Ha
 
 # [OPTIONS]
 
--a [n] -d [d]   -- Add a task n due in d days
+-a [n] -d [d]           Add a task n due in d days
 
--r [n]          -- Remove the nth task
+-r [n]                  Remove the nth task
 
--p [n]          -- Prioritize the nth term
+-p [n]                  Prioritize the nth term
 
--e [n] [d]      -- Extend the deadline of the nth item by d days
+-e [n] [d]              Extend the deadline of the nth item by d days
 
--c              -- Clear all entries
+-c                      Clear all entries
 
--h              -- Help and information
+-h                      Help and information
 
--v              -- Version info
+-v                      Version info
 
--o              -- Order by due date
+-o                      Order by due date
+
+--mkconfig              Go through the config setup wizard

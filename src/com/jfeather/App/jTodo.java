@@ -1,6 +1,7 @@
 package com.jfeather.App;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -17,7 +18,7 @@ public class jTodo {
 	public enum ColorMode {BY_DATE, BY_GROUP, RAINBOW};
 	
 	public static final String FILE_PATH = "list.txt";
-	public static final double VERSION = 1.6;
+	public static final double VERSION = 1.7;
 	
 	/*
 	 * AVAILABLE OPTIONS
@@ -205,28 +206,38 @@ public class jTodo {
 									todoTask += "/" + day;
 								} else {
 									System.out.println("Invalid date provided!");
-									todoTask += "/-";
+									todoTask += "/-1";
 								}
 	
 							}
 						} else 
-							todoTask += "/-";
-						Task[] previousTasks = List.read(false);
-						String[] stringTasks = null;;
+							todoTask += "/-1";
 						
-						if (previousTasks == null) {
-							List.write(new String[] {todoTask});
+						Task[][] previousTasks = List.read(false);
+						String[] stringTasks = null;
+												
+						if (previousTasks[0] == null) {
+							System.out.println("null");
+							List.write(new String[] {todoTask}, new String[] {});
 							
 						} else {
 						
-							stringTasks = new String[previousTasks.length + 1];
-							i = 0;
-							for (Task t: previousTasks) {
-								stringTasks[i] = t.toString();
-								i++;
-							}
-							stringTasks[stringTasks.length - 1] = todoTask;
-							List.write(stringTasks);
+							// This process here is essentially just appending a task to an array
+							
+							// Convert our current tasks to string
+							stringTasks = List.taskToStringArr(previousTasks[0]);
+							
+							// Create an array with one extra element (the new task)
+							String[] newStringTasks = new String[stringTasks.length + 1];
+							
+							// Copy the old array into the new
+							System.arraycopy(stringTasks, 0, newStringTasks, 0, stringTasks.length);
+							
+							// Add the new task
+							newStringTasks[newStringTasks.length - 1] = todoTask;
+							
+							// Now write
+							List.write(newStringTasks, List.taskToStringArr(previousTasks[1]));
 						}
 						System.out.println("Task added!");
 						
@@ -239,20 +250,31 @@ public class jTodo {
 					try {
 						
 						int index = Integer.parseInt(args[1]);
-						Task[] tasks = List.read(false);
+						Task[][] tasks = List.read(false);
 						
-						String[] newTasks = new String[tasks.length - 1];
+						String[] newTasks = new String[tasks[0].length - 1];
 						
 						int offset = 0;
 						
-						for (int h = 0; h < tasks.length; h++) {
+						for (int h = 0; h < tasks[0].length; h++) {
 							if ((h+1) == index) {
 								offset = 1;
 								continue;
 							}
-							newTasks[h-offset] = tasks[h].toString();
+							newTasks[h-offset] = tasks[0][h].toString();
 						}
-						List.write(newTasks);
+						
+						String[] completedTasks = new String[tasks[1].length + 1];
+						int j = 0;
+						for (Task t: tasks[1]) {
+							completedTasks[j++] = t.toString();
+						}
+						
+						// We do index - 1 because our list is 1-indexed
+						completedTasks[completedTasks.length - 1] = tasks[0][index - 1].toString();
+						
+						List.write(newTasks, completedTasks);
+						
 						// Decide on what to say for removing the task
 						System.out.println(Task.FINISHED_TASKS[new Random().nextInt(Task.FINISHED_TASKS.length)]);
 						
@@ -260,7 +282,7 @@ public class jTodo {
 						
 					} catch (Exception ex) {
 						System.out.println("Invalid task index!");
-						ex.printStackTrace();
+						//ex.printStackTrace();
 					}
 					
 					break;
@@ -272,20 +294,14 @@ public class jTodo {
 						
 						index = (Integer.parseInt(args[1])) - 1;
 						foundIndex = true;
-						Task[] tasks = List.read(false);
+						Task[][] tasks = List.read(false);
 						
 						int extension = (Integer.parseInt(args[2]));
 						foundExtension = true;
 						
-						tasks[index].extendDueDate(extension);
-						
-						String[] newTasks = new String[tasks.length];
-						
-						for (int h = 0; h < tasks.length; h++) {
-							newTasks[h] = tasks[h].toString();
-						}
-						
-						List.write(newTasks);
+						tasks[0][index].extendDueDate(extension);
+												
+						List.write(List.taskToStringArr(tasks[0]), List.taskToStringArr(tasks[1]));
 						System.out.println("Task extended!");
 						
 						List.print(date);
@@ -319,16 +335,11 @@ public class jTodo {
 								}
 								
 								// Now write the new task
-								Task[] tasks = List.read(false);
-								tasks[index].extendDueDate(day - tasks[index].getYearDayDue() + date.get(Calendar.DAY_OF_YEAR) - 1);
+								Task[][] tasks = List.read(false);
+								tasks[0][index].extendDueDate(day - tasks[0][index].getYearDayDue() + date.get(Calendar.DAY_OF_YEAR) - 1);
 								
-								String[] newTasks = new String[tasks.length];
 								
-								for (int h = 0; h < tasks.length; h++) {
-									newTasks[h] = tasks[h].toString();
-								}
-								
-								List.write(newTasks);
+								List.write(List.taskToStringArr(tasks[0]), List.taskToStringArr(tasks[1]));
 								System.out.println("Task extended!");
 								
 								List.print(date);
@@ -347,20 +358,20 @@ public class jTodo {
 					try {
 						
 						index = (Integer.parseInt(args[1])) - 1;
-						Task[] tasks = List.read(false);
+						Task[][] tasks = List.read(false);
 						
 						
-						String[] newTasks = new String[tasks.length];
+						String[] newTasks = new String[tasks[0].length];
 						
-						newTasks[0] = tasks[index].toString();
+						newTasks[0] = tasks[0][index].toString();
 						int offset = 1;
-						for (int h = 1; h < tasks.length; h++) {
+						for (int h = 1; h < tasks[0].length; h++) {
 							if (h == index + 1) {
 								offset = 0;
 							}
 							newTasks[h] = tasks[h - offset].toString();
 						}
-						List.write(newTasks);
+						List.write(List.taskToStringArr(tasks[0]), List.taskToStringArr(tasks[1]));
 						System.out.println("Task prioritized!");
 						
 						List.print(date);
@@ -382,20 +393,16 @@ public class jTodo {
 				case "c":
 					/****** CLEAR *******/
 					
-					List.write(new String[] {});
+					List.write(new String[] {}, new String[] {});
 					
 					List.print(date);
 					break;
 				case "o":
 					/****** ORDER *******/
-					Task[] arr = List.read(false);
-					insertSort(arr);
-					String[] sArr = new String[arr.length];
-					for (int h = 0; h < sArr.length; h++) {
-						sArr[h] = arr[h].toString();
-					}
+					Task[][] arr = List.read(false);
+					insertSort(arr[0]);
 					
-					List.write(sArr);
+					List.write(List.taskToStringArr(arr[0]), List.taskToStringArr(arr[1]));
 					List.print(date);
 					
 					break;
@@ -403,6 +410,21 @@ public class jTodo {
 					/****** MAKE CONFIG *******/
 					Config.makeConfig();
 					
+					break;
+				case "-toggle-color":
+					Config.toggleColor();
+					
+					Task[][] read = List.read(false);
+					if (read != null) { // Preserve previous entries
+						
+						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
+					} else
+						List.write(new String[] {}, new String[] {}); // Empty list
+
+					break;
+				case "-completed":
+					/****** COMPLETED ******/
+					List.printCompleted(date);
 					break;
 				default:
 					System.out.println("Invalid task!");
@@ -445,7 +467,8 @@ public class jTodo {
 						 + "-c 		--  Clear all entries in the list\n"
 						 + "-o		--	Order all of the entries in the list by due date\n"
 						 + "-h		--	Show help\n"
-						 + "-v		-- 	Show version");
+						 + "-v		-- 	Show version"
+						 + "--mkconfig		-- Use the config setup wizard");
 	}
 	
 	public static void insertSort(Task[] arr) {
