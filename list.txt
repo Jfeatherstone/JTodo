@@ -4,6 +4,8 @@
 
 # Todo tasks:
 !Active!
+Some task /-1/-1
+Some task /-1/-1
 !Active!
 
 # The config settings for JTodo
@@ -11,4 +13,6 @@
 :color_type=8
 
 !Completed!
+Some task /-1/59
+Some task /-1/59
 !Completed!

@@ -18,7 +18,7 @@ public class jTodo {
 	public enum ColorMode {BY_DATE, BY_GROUP, RAINBOW};
 	
 	public static final String FILE_PATH = "list.txt";
-	public static final double VERSION = 1.7;
+	public static final double VERSION = 1.8;
 	
 	/*
 	 * AVAILABLE OPTIONS
@@ -271,6 +271,7 @@ public class jTodo {
 						}
 						
 						// We do index - 1 because our list is 1-indexed
+						tasks[0][index - 1].setDone(date.get(Calendar.DAY_OF_YEAR));
 						completedTasks[completedTasks.length - 1] = tasks[0][index - 1].toString();
 						
 						List.write(newTasks, completedTasks);
