@@ -438,7 +438,6 @@ public class jTodo {
 		}
 	}
 	
-	
 		
 	
 	public static void printVersion() {
@@ -450,6 +449,7 @@ public class jTodo {
 							"          Version: " + VERSION);
 
 	}
+
 	
 	public static void printHelp() {
 		printVersion();
@@ -460,17 +460,19 @@ public class jTodo {
 						 + "todo -a [task] -- Add a new task\n"
 						 + "todo -a [task] -d [n] -- Add a new task, due in n days\n\n"
 						 + "[OPTIONS]\n"
-						 + "-a [task]	--	Add a task to the list\n"
-						 + "			If you append -d [n], it will set a due date in n days (See example)\n"
-						 + "-r [n]		--	Remove the nth task from the list\n"
-						 + "-e [n] [d]	--	Extend the nth task's due date by d days\n"
-						 + "-p [n]		--	Priorize the nth task, moving it to the top of the list\n"
-						 + "-c 		--  Clear all entries in the list\n"
-						 + "-o		--	Order all of the entries in the list by due date\n"
-						 + "-h		--	Show help\n"
-						 + "-v		-- 	Show version"
-						 + "--mkconfig		-- Use the config setup wizard");
+						 + "-a [task]		--	Add a task to the list\n"
+						 + "				If you append -d [n], it will set a due date in n days (See example)\n"
+						 + "-r [n]			--	Remove the nth task from the list\n"
+						 + "-e [n] [d]		--	Extend the nth task's due date by d days\n"
+						 + "-p [n]			--	Priorize the nth task, moving it to the top of the list\n"
+						 + "-c 			--	Clear all entries in the list (active and completed)\n"
+						 + "-o			--	Order all of the entries in the list by due date\n"
+						 + "-h			--	Show help\n"
+						 + "-v			--	Show version\n"
+						 + "--mkconfig		--	Use the config setup wizard\n"
+						 + "--completed		--	Show the ten most recently completed tasks");
 	}
+	
 	
 	public static void insertSort(Task[] arr) {
 		int n = arr.length;
@@ -486,6 +488,7 @@ public class jTodo {
 			}
 		}
 	}
+	
 	
 	public static String[] splitByString(String str, String split) {
 		String[] arr = new String[2];

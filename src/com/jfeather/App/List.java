@@ -200,15 +200,14 @@ public class List {
 	
 	public static void printCompleted(Calendar date) {
 		Task[] tasks = List.read(true)[1];
-		int i = 0;
 		if (tasks.length == 0) {
 			System.out.println("No completed tasks...");
 			System.out.println("Better get to work!");
 		} else {
 			System.out.println("******* Completed Tasks *******");
 
-			for (Task t: tasks) {
-				t.printCompletedTask(i++, date.get(Calendar.DAY_OF_YEAR));
+			for (int j = tasks.length - 1; j > 0; j--) {
+				tasks[j].printCompletedTask((tasks.length - j + 1), date.get(Calendar.DAY_OF_YEAR));
 			}
 		}
 	}
