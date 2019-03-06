@@ -70,7 +70,13 @@ public class Task {
 			return "Past Due!";
 	}
 	
-	public void printTask(int index, int dayOfYear) {
+	public void printTask(int index, int dayOfYear, int indentSpaces) {
+		// Get the proper number of spaces
+		String spaces = "";
+		for (int i = 0; i < (indentSpaces - (index + 1 + "").length()); i++) {
+			spaces += " ";
+		}
+		
 		if (Config.isColorEnabled()) {
 			/*
 			 * Currently only rainbow mode is implemented for printing modes
@@ -88,9 +94,9 @@ public class Task {
 		} else {
 
 			if (yearDayDue != -1)
-				System.out.println(index + 1 + ". " + description + " (" + getDaysUntilDue(dayOfYear) + ")");
+				System.out.println(index + 1 + "." + spaces + description + " (" + getDaysUntilDue(dayOfYear) + ")");
 			else
-				System.out.println(index + 1 + ". " + description);
+				System.out.println(index + 1 + ". " + spaces + description);
 			
 		}
 	}

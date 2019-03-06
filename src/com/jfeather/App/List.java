@@ -183,6 +183,7 @@ public class List {
 
 			} else {
 				int i = 0;
+				int indentSpaces = ("" + tasks.length).length();
 				
 				if (Config.isColorEnabled())
 					System.out.println(Color.ANSI_256_TEST + "******* TODO LIST *******" + Color.reset());
@@ -191,7 +192,7 @@ public class List {
 
 				for (Task t: tasks) {
 					
-					t.printTask(i, date.get(Calendar.DAY_OF_YEAR));
+					t.printTask(i, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
 										
 					i++;
 				}
