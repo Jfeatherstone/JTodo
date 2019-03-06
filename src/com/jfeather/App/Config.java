@@ -19,6 +19,7 @@ public class Config {
 	
 	public enum ColorType {TYPE_8, TYPE_16, TYPE_256};
 	
+	private static boolean enableGroups = false;
 	private static boolean enableColor = false; // Default value is disabled for compatability issues
 	private static String filePath = "list.txt"; // This shouldn't ever change as of v1.6
 	private static ColorType colorType = ColorType.TYPE_8; // Default value is lowest number of colors
@@ -40,7 +41,16 @@ public class Config {
 	}
 	
 	public static void toggleColor() {
+		System.out.println("Color toggled!");
 		enableColor = !enableColor;
+	}
+	
+	public static boolean areGroupsEnabled() {
+		return enableGroups;
+	}
+	
+	public static void toggleGroups() {
+		enableGroups = !enableGroups;
 	}
 	
 	/****************************************
@@ -87,6 +97,8 @@ public class Config {
 						 * This is the part where we actually assign properties to their variables so they can be globally accessed
 						 */
 						switch (word) {
+							
+							/******** ENABLE COLOR ********/
 							/*
 							 * ENABLE COLOR
 							 * 
@@ -96,13 +108,14 @@ public class Config {
 							 */
 							case "enable_color":
 								//System.out.println("Found color option: " + value);
-								if (value.toLowerCase().equals("true") || value.toLowerCase().equals(1))
+								if (value.toLowerCase().equals("true") || value.toLowerCase().equals("1"))
 									enableColor = true;
 								else
 									enableColor = false;
 								
 								break;
 								
+							/******* COLOR TYPE ********/
 							/*
 							 * COLOR TYPE
 							 * 
@@ -134,7 +147,16 @@ public class Config {
 								}
 								
 								break;
+							
+							/******* ENABLE GROUPS ********/
+							case "enable_groups":
 								
+								if (value.toLowerCase().equals("true") || value.toLowerCase().equals("1"))
+									enableGroups = true;
+								else
+									enableGroups = false;
+								
+								break;
 						}
 					}
 				}

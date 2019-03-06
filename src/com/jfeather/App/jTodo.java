@@ -104,7 +104,7 @@ public class jTodo {
 				// Based on the option
 				switch (args[0].substring(1, args[0].length())) {
 				case "a": 
-					/****** ADD *******/
+/****** ADD *******/
 					
 					// Iterate until we hit -d or the end of the args
 					String todoTask = "";
@@ -245,7 +245,7 @@ public class jTodo {
 					}
 					break;
 				case "r":
-					/****** REMOVE *******/
+/****** REMOVE *******/
 					
 					try {
 						
@@ -287,7 +287,8 @@ public class jTodo {
 					}
 					
 					break;
-				case "e": /****** EXTEND *******/
+				case "e":
+/****** EXTEND *******/
 					boolean foundIndex = false;
 					boolean foundExtension = false;
 					int index = -1;
@@ -355,7 +356,7 @@ public class jTodo {
 
 					break;
 				case "p":
-					/****** PRIOTIZE *******/
+/****** PRIOTIZE *******/
 					try {
 						
 						index = (Integer.parseInt(args[1])) - 1;
@@ -384,22 +385,22 @@ public class jTodo {
 
 					break;
 				case "v":
-					/****** VERSION *******/
+/****** VERSION *******/
 					printVersion();
 					break;
 				case "h":
-					/****** HELP *******/
+/****** HELP *******/
 					printHelp();
 					break;
 				case "c":
-					/****** CLEAR *******/
+/****** CLEAR *******/
 					
 					List.write(new String[] {}, new String[] {});
 					
 					List.print(date);
 					break;
 				case "o":
-					/****** ORDER *******/
+/****** ORDER *******/
 					Task[][] arr = List.read(false);
 					insertSort(arr[0]);
 					
@@ -408,11 +409,12 @@ public class jTodo {
 					
 					break;
 				case "-mkconfig":
-					/****** MAKE CONFIG *******/
+/****** MAKE CONFIG *******/
 					Config.makeConfig();
 					
 					break;
 				case "-toggle-color":
+/****** TOGGLE COLOR ******/
 					Config.toggleColor();
 					
 					Task[][] read = List.read(false);
@@ -421,13 +423,13 @@ public class jTodo {
 						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 					} else
 						List.write(new String[] {}, new String[] {}); // Empty list
-
 					break;
 				case "-completed":
-					/****** COMPLETED ******/
+/****** COMPLETED ******/
 					List.printCompleted(date);
 					break;
 				default:
+/******* INVALID *******/
 					System.out.println("Invalid task!");
 					break;
 				}

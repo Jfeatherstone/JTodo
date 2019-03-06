@@ -4,8 +4,16 @@
 
 # Todo tasks:
 !Active!
-Some task /-1/-1
-Some task /-1/-1
+Setup grub theme /-1/-1/defaul
+Setup fusion or freecad natively or with wine /-1/-1/defaul
+Properly format and setup my usb card /-1/-1/defaul
+Fix internal collisions is SFMLC /-1/-1/defaul
+Add intersection tolerances in SFMLC /-1/-1/defaul
+Optimize vertex reduction in SFMLC /-1/-1/defaul
+Refactor wack ass constructor for polygons /-1/-1/defaul
+Setup vpn /-1/-1/defaul
+Add groups to jTodo /-1/-1/defaul
+Some test task /-1
 !Active!
 
 # The config settings for JTodo
@@ -13,6 +21,11 @@ Some task /-1/-1
 :color_type=8
 
 !Completed!
-Some task /-1/59
-Some task /-1/59
+Finish thermo write up /-1/60/defaul
+An hour of computer maitenance /-1/62/defaul
+Implement collision resultant in SFMLC /-1/62/defaul
+Mech homework /65/62/defaul
+Make jTodo not a clown fiesta /-1/64/defaul
+Fix wifi issue on sleep /-1/64/defaul
+Reverse order of completed tasks in jTodo /-1/65/defaul
 !Completed!

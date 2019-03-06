@@ -12,8 +12,10 @@ import com.jfeather.App.Config.ColorType;
 
 public class List {
 
-	public static String ACTIVE_INDICATOR = "!Active!";
-	public static String COMPLETED_INDICATOR = "!Completed!";
+	public static final String ACTIVE_INDICATOR = "!Active!";
+	public static final String COMPLETED_INDICATOR = "!Completed!";
+	public static final String GROUP_INDICATOR = "?";
+	
 	
 	public static void write(String[] currentTasks, String[] completedTasks) {
 		try {
