@@ -73,7 +73,7 @@ public class Task {
 	public void printTask(int index, int dayOfYear, int indentSpaces) {
 		// Get the proper number of spaces
 		String spaces = "";
-		for (int i = 0; i < (indentSpaces - (index + 1 + "").length()); i++) {
+		for (int i = 0; i < (indentSpaces - (index + "").length()); i++) {
 			spaces += " ";
 		}
 		
@@ -84,19 +84,19 @@ public class Task {
 			
 			if (yearDayDue != -1)
 				System.out.println(Color.ANSI_RAINBOW[index % Color.ANSI_RAINBOW.length] +
-						(index + 1) + ". " + description + " (" + getDaysUntilDue(dayOfYear) + ")" + 
+						(index) + ". " + description + " (" + getDaysUntilDue(dayOfYear) + ")" + 
 						Color.reset());
 			else
 				System.out.println(Color.ANSI_RAINBOW[index % Color.ANSI_RAINBOW.length] + 
-						(index + 1) + ". " + description +
+						(index) + ". " + description +
 						Color.reset());
 
 		} else {
 
 			if (yearDayDue != -1)
-				System.out.println(index + 1 + "." + spaces + description + " (" + getDaysUntilDue(dayOfYear) + ")");
+				System.out.println(index + "." + spaces + description + " (" + getDaysUntilDue(dayOfYear) + ")");
 			else
-				System.out.println(index + 1 + ". " + spaces + description);
+				System.out.println(index + ". " + spaces + description);
 			
 		}
 	}
