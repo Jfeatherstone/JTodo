@@ -4,23 +4,23 @@
 
 # Todo tasks:
 !Active!
-Setup grub theme /-1/-1/default
+Setup grub theme /-1/-1/test
 Setup fusion or freecad natively or with wine /-1/-1/default
-Properly format and setup my usb card /-1/-1/default
+Properly format and setup my usb card /-1/-1/test
 Fix internal collisions is SFMLC /-1/-1/default
 Add intersection tolerances in SFMLC /-1/-1/default
-Optimize vertex reduction in SFMLC /-1/-1/default
+Optimize vertex reduction in SFMLC /-1/-1/test
 Refactor wack ass constructor for polygons /-1/-1/default
 Setup vpn /-1/-1/default
-Add groups to jTodo /-1/-1/default
+Add groups to jTodo /-1/-1/test
 Some test task /-1/-1/default
-Testerino /-1/-1/default
+Testerino /-1/-1/test
 !Active!
 
 # The config settings for jTodo
 :enable_color=false # Possible values: true or 1 will enable, while false or 0 will disable
 # Enabling groups will display the current tasks in group form (which is specified by todo -a <task> <-g <group>>
-:enable_groups=false # Possible values: true or 1 will enable, while false or 0 will disable
+:enable_groups=true # Possible values: true or 1 will enable, while false or 0 will disable
 :color_type=8
 
 !Completed!

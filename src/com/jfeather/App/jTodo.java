@@ -101,6 +101,7 @@ public class jTodo {
 			// First, we should check to see if we have an option
 			if (args[0].substring(0, 1).equals("-")) {
 				
+				Task[][] read;
 				// Based on the option
 				switch (args[0].substring(1, args[0].length())) {
 				case "a": 
@@ -426,10 +427,10 @@ public class jTodo {
 					break;
 				case "o":
 /****** ORDER *******/
-					Task[][] arr = List.read(false);
-					insertSort(arr[0]);
+					read = List.read(false);
+					insertSort(read[0]);
 					
-					List.write(List.taskToStringArr(arr[0]), List.taskToStringArr(arr[1]));
+					List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 					List.print(date);
 					
 					break;
@@ -442,14 +443,27 @@ public class jTodo {
 /****** TOGGLE COLOR ******/
 					Config.toggleColor();
 					
-					Task[][] read = List.read(false);
+					read = List.read(false);
 					if (read != null) { // Preserve previous entries
 						
 						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 					} else
 						List.write(new String[] {}, new String[] {}); // Empty list
 					break;
+				case "-toggle-groups":
+/****** TOGGLE Groups ******/
+					Config.toggleGroups();
+					
+					read = List.read(false);
+					if (read != null) { // Preserve previous entries
+						
+						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
+					} else
+						List.write(new String[] {}, new String[] {}); // Empty list
+					break;
+
 				case "-completed":
+					
 /****** COMPLETED ******/
 					List.printCompleted(date);
 					break;

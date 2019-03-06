@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.jfeather.App.Config.ColorType;
 
@@ -200,15 +201,41 @@ public class List {
 	
 					for (Task t: tasks) {
 						
-						t.printTask(i, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
+						t.printTask(i++, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
 											
-						i++;
 					}
 					System.out.println();
 				
 				} else {
 					// First we want to find how many groups we have and sort each task into its category
-					HashMap<String, ArrayList<String>> taskMap = new HashMap<>();
+					HashMap<String, ArrayList<Task>> taskMap = new HashMap<>();
+					
+					for (int i = 0; i < tasks.length; i++) {
+						// Grab the map, in case there are other tasks that were already put in the group
+						ArrayList<Task> tasksInThisGroup = taskMap.get(tasks[i].getGroup());
+						
+						// If there weren't any, we create the list
+						if (tasksInThisGroup == null)
+							tasksInThisGroup = new ArrayList<>();
+						
+						// Add the task to the list and put it back in the map
+						tasksInThisGroup.add(tasks[i]);
+						taskMap.put(tasks[i].getGroup(), tasksInThisGroup);
+					}
+					
+					// Now iterate through every group and display tasks
+					for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
+						// Print out the group name
+						System.out.println("** " + entry.getKey().toUpperCase() + " **");
+						
+						int i = 0;
+						int indentSpaces = ("" + entry.getValue().size()).length();
+
+						for (Task t: entry.getValue()) {
+							System.out.print("    ");
+							t.printTask(i++, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
+						}
+					}
 				}
 			}
 		}
