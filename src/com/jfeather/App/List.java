@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import com.jfeather.App.Config.ColorType;
 
@@ -47,11 +48,16 @@ public class List {
 			 */
 			bw.newLine();
 			bw.newLine();
-			bw.write("# The config settings for JTodo");
+			bw.write("# The config settings for jTodo");
 			bw.newLine();
 			bw.write(":enable_color=" + Config.isColorEnabled() + " # Possible values: true or 1 will enable, while false or 0 will disable");
 			bw.newLine();
 			
+			bw.write("# Enabling groups will display the current tasks in group form (which is specified by todo -a <task> <-g <group>>");
+			bw.newLine();
+			bw.write(":enable_groups=" + Config.areGroupsEnabled() + " # Possible values: true or 1 will enable, while false or 0 will disable");
+			bw.newLine();
+
 			// This way we default to 8 if there is not real color type
 			if (Config.getColorType() == ColorType.TYPE_256)
 				bw.write(":color_type=256");
@@ -182,21 +188,28 @@ public class List {
 					System.out.println("Nothing to do... :)");
 
 			} else {
-				int i = 0;
-				int indentSpaces = ("" + tasks.length).length();
 				
-				if (Config.isColorEnabled())
-					System.out.println(Color.ANSI_256_TEST + "******* TODO LIST *******" + Color.reset());
-				else
-					System.out.println("******* TODO LIST *******");
-
-				for (Task t: tasks) {
+				if (!Config.areGroupsEnabled()) {
+					int i = 0;
+					int indentSpaces = ("" + tasks.length).length();
 					
-					t.printTask(i, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
-										
-					i++;
+					if (Config.isColorEnabled())
+						System.out.println(Color.ANSI_256_TEST + "******* TODO LIST *******" + Color.reset());
+					else
+						System.out.println("******* TODO LIST *******");
+	
+					for (Task t: tasks) {
+						
+						t.printTask(i, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
+											
+						i++;
+					}
+					System.out.println();
+				
+				} else {
+					// First we want to find how many groups we have and sort each task into its category
+					HashMap<String, ArrayList<String>> taskMap = new HashMap<>();
 				}
-				System.out.println();
 			}
 		}
 	}

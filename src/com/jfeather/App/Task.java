@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Task {
 	
-	public static final String DEFAULT_GROUP = "default";
+	public static final String DEFAULT_GROUP = "Todo";
 	
 	public static final String[] FINISHED_TASKS = {"There's one less thing to do!", "Good job!",
 			"Another one bites the dust!", "Git 'er done!", "You're doing great!", "Maybe now you can go to sleep!",

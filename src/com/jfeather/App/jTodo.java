@@ -109,27 +109,39 @@ public class jTodo {
 					// Iterate until we hit -d or the end of the args
 					String todoTask = "";
 					int i = 1;
+					
 					boolean dateIncluded = false;
+					String dateTerm = null;
+					boolean groupIncluded = false;
+					String groupTerm = null;
+					
 					while (i < args.length) {
+						// Date
 						if (args[i].equals("-d")) {
 							dateIncluded = true;
-							break;
-						}
-						todoTask += args[i] + " ";
+							dateTerm = args[++i];
+						} else
+						// Group
+						if (args[i].equals("-g")) {
+							groupIncluded = true;
+							groupTerm = args[++i];
+						} else
+							todoTask += args[i] + " ";
+						
 						i++;
 					}
 					if (todoTask.length() > 0) {
 						if (dateIncluded) {
 							// Look at the term after the -d
 							try {
-								int day = Integer.parseInt(args[i+1]) + date.get(Calendar.DAY_OF_YEAR);
+								int day = Integer.parseInt(dateTerm) + date.get(Calendar.DAY_OF_YEAR);
 								todoTask += "/" + day;
 							} catch (Exception ex) {
 								// First, we look to see if the user entered a day of the week
 								int day = -1;
-								if (args[i+1].contains("/")) {
+								if (dateTerm.contains("/")) {
 									// We see if the user put in a date of the format "1/10"
-									String[] arr = splitByString(args[i+1], "/");
+									String[] arr = splitByString(dateTerm, "/");
 									
 									try {
 										// Try to convert our strings to ints
@@ -157,7 +169,7 @@ public class jTodo {
 									}
 																	
 								} else {
-									switch (args[i+1].toLowerCase()) {
+									switch (dateTerm.toLowerCase()) {
 									case "monday":
 										day = Math.abs(date.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY);
 										if (date.get(Calendar.DAY_OF_WEEK) > Calendar.MONDAY)
@@ -213,6 +225,16 @@ public class jTodo {
 						} else 
 							todoTask += "/-1";
 						
+						
+						// Add the -1 for the task not being completed
+						todoTask += "/-1";
+						
+						// Now we see if there was a group specified
+						if (groupIncluded) {
+							todoTask += "/" + groupTerm;
+						} else
+							todoTask += "/" + Task.DEFAULT_GROUP;
+						
 						Task[][] previousTasks = List.read(false);
 						String[] stringTasks = null;
 						
@@ -260,7 +282,7 @@ public class jTodo {
 						int offset = 0;
 						
 						for (int h = 0; h < tasks[0].length; h++) {
-							if ((h+1) == index) {
+							if (h == index) {
 								offset = 1;
 								continue;
 							}
@@ -274,8 +296,8 @@ public class jTodo {
 						}
 						
 						// We do index - 1 because our list is 1-indexed
-						tasks[0][index - 1].setDone(date.get(Calendar.DAY_OF_YEAR));
-						completedTasks[completedTasks.length - 1] = tasks[0][index - 1].toString();
+						tasks[0][index].setDone(date.get(Calendar.DAY_OF_YEAR));
+						completedTasks[completedTasks.length - 1] = tasks[0][index].toString();
 						
 						List.write(newTasks, completedTasks);
 						

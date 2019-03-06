@@ -14,10 +14,13 @@ Refactor wack ass constructor for polygons /-1/-1/default
 Setup vpn /-1/-1/default
 Add groups to jTodo /-1/-1/default
 Some test task /-1/-1/default
+Testerino /-1/-1/default
 !Active!
 
-# The config settings for JTodo
+# The config settings for jTodo
 :enable_color=false # Possible values: true or 1 will enable, while false or 0 will disable
+# Enabling groups will display the current tasks in group form (which is specified by todo -a <task> <-g <group>>
+:enable_groups=false # Possible values: true or 1 will enable, while false or 0 will disable
 :color_type=8
 
 !Completed!
@@ -28,4 +31,7 @@ Mech homework /65/62/default
 Make jTodo not a clown fiesta /-1/64/default
 Fix wifi issue on sleep /-1/64/default
 Reverse order of completed tasks in jTodo /-1/65/default
+Testerino /-1/65/default
+Testerino /-1/65/default
+Group testing /-1/65/FancyGroup
 !Completed!
