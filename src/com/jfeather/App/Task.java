@@ -148,16 +148,20 @@ public class Task {
 					break;
 				}
 			}
+			
 			if (!done)
 				index1 = str.length();
-
+			else
+				index1 -= 1;
+			
 			if (index1 > str.length() || index2 >= str.length())
 				break;
 			
-			words.add(str.substring(index2, index1 - 1));
-			counter = index1;
-		} 
-		
+			words.add(str.substring(index2, index1));
+			
+			counter = ++index1;
+		}
+				
 		String[] arr = new String[words.size()];
 		int i = 0;
 		for (String s: words) {
@@ -167,7 +171,9 @@ public class Task {
 		
 		return arr;
 
-	}	
+	}
+	
+	
 	@Override
 	public String toString() {
 		return description + "/" + yearDayDue + "/" + yearDayDone + "/" + group;

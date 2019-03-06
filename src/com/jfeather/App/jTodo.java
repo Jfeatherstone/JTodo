@@ -215,10 +215,13 @@ public class jTodo {
 						
 						Task[][] previousTasks = List.read(false);
 						String[] stringTasks = null;
-												
+						
+						// We turn it into a real task such that it gets a group and completed date by default
+						Task newTask = new Task(todoTask);
+						
 						if (previousTasks[0] == null) {
 							System.out.println("null");
-							List.write(new String[] {todoTask}, new String[] {});
+							List.write(new String[] {newTask.toString()}, new String[] {});
 							
 						} else {
 						
@@ -234,7 +237,7 @@ public class jTodo {
 							System.arraycopy(stringTasks, 0, newStringTasks, 0, stringTasks.length);
 							
 							// Add the new task
-							newStringTasks[newStringTasks.length - 1] = todoTask;
+							newStringTasks[newStringTasks.length - 1] = newTask.toString();
 							
 							// Now write
 							List.write(newStringTasks, List.taskToStringArr(previousTasks[1]));

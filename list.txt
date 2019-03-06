@@ -4,16 +4,16 @@
 
 # Todo tasks:
 !Active!
-Setup grub theme /-1/-1/defaul
-Setup fusion or freecad natively or with wine /-1/-1/defaul
-Properly format and setup my usb card /-1/-1/defaul
-Fix internal collisions is SFMLC /-1/-1/defaul
-Add intersection tolerances in SFMLC /-1/-1/defaul
-Optimize vertex reduction in SFMLC /-1/-1/defaul
-Refactor wack ass constructor for polygons /-1/-1/defaul
-Setup vpn /-1/-1/defaul
-Add groups to jTodo /-1/-1/defaul
-Some test task /-1
+Setup grub theme /-1/-1/default
+Setup fusion or freecad natively or with wine /-1/-1/default
+Properly format and setup my usb card /-1/-1/default
+Fix internal collisions is SFMLC /-1/-1/default
+Add intersection tolerances in SFMLC /-1/-1/default
+Optimize vertex reduction in SFMLC /-1/-1/default
+Refactor wack ass constructor for polygons /-1/-1/default
+Setup vpn /-1/-1/default
+Add groups to jTodo /-1/-1/default
+Some test task /-1/-1/default
 !Active!
 
 # The config settings for JTodo
@@ -21,11 +21,11 @@ Some test task /-1
 :color_type=8
 
 !Completed!
-Finish thermo write up /-1/60/defaul
-An hour of computer maitenance /-1/62/defaul
-Implement collision resultant in SFMLC /-1/62/defaul
-Mech homework /65/62/defaul
-Make jTodo not a clown fiesta /-1/64/defaul
-Fix wifi issue on sleep /-1/64/defaul
-Reverse order of completed tasks in jTodo /-1/65/defaul
+Finish thermo write up /-1/60/default
+An hour of computer maitenance /-1/62/default
+Implement collision resultant in SFMLC /-1/62/default
+Mech homework /65/62/default
+Make jTodo not a clown fiesta /-1/64/default
+Fix wifi issue on sleep /-1/64/default
+Reverse order of completed tasks in jTodo /-1/65/default
 !Completed!
