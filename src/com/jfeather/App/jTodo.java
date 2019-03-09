@@ -550,16 +550,22 @@ public class jTodo {
 						 + "todo -a [task] -d [n] -- Add a new task, due in n days\n\n"
 						 + "[OPTIONS]\n"
 						 + "-a [task]		--	Add a task to the list\n"
-						 + "				If you append -d [n], it will set a due date in n days (See example)\n"
-						 + "-r [n]			--	Remove the nth task from the list\n"
-						 + "-e [n] [d]		--	Extend the nth task's due date by d days\n"
-						 + "-p [n]			--	Priorize the nth task, moving it to the top of the list\n"
-						 + "-c 			--	Clear all entries in the list (active and completed)\n"
-						 + "-o			--	Order all of the entries in the list by due date\n"
-						 + "-h			--	Show help\n"
-						 + "-v			--	Show version\n"
-						 + "--mkconfig		--	Use the config setup wizard\n"
-						 + "--completed		--	Show the ten most recently completed tasks");
+						 + "					If you append -d <date>, it will set a due date in one of 3 formats:\n"
+						 + "					1. In the number of days specified (\"4\")\n"
+						 + "					2. On the date specified (\"12/31\")\n"
+						 + "					3. On the next weekday (\"Wednesday\")\n"
+						 + "					You can also use -g <group> to specific a group for the task\n\n"
+						 + "-r [n]			--	Remove the nth task from the list\n\n"
+						 + "-e [n] [d]		--	Extend the nth task's due date by d days\n\n"
+						 + "-p [n]			--	Priorize the nth task, moving it to the top of the list\n\n"
+						 + "-c 			--	Clear all entries in the list (active and completed)\n\n"
+						 + "-o			--	Order all of the entries in the list by due date\n\n"
+						 + "-h			--	Show help (this menu)\n\n"
+						 + "-v			--	Show version\n\n"
+						 + "--mkconfig		--	Use the config setup wizard\n\n"
+						 + "--completed		--	Show the ten most recently completed tasks\n\n"
+						 + "--toggle-color		--	Enable or disable colored output (ANSI)\n\n"
+						 + "--toggle-groups		--	Enable or disable display tasks by group");
 	}
 	
 	
