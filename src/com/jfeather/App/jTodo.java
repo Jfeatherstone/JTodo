@@ -1,8 +1,11 @@
 package com.jfeather.App;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class jTodo {
@@ -18,7 +21,7 @@ public class jTodo {
 	public enum ColorMode {BY_DATE, BY_GROUP, RAINBOW};
 	
 	public static final String FILE_PATH = "list.txt";
-	public static final double VERSION = 1.8;
+	public static final double VERSION = 1.9;
 	
 	/*
 	 * AVAILABLE OPTIONS
@@ -275,8 +278,43 @@ public class jTodo {
 					
 					try {
 						
-						int index = Integer.parseInt(args[1]);
 						Task[][] tasks = List.read(false);
+						int index = -1;
+						
+						if (Config.areGroupsEnabled()) {
+							// If groups are enabled, the user must provide two indicies
+							// The first will be for the group number and second for the task number
+							int indicies[] = new int[] {Integer.parseInt(args[1]), Integer.parseInt(args[2])};
+							
+							// Now we sort our tasks by group
+							HashMap<String, ArrayList<Task>> taskMap = List.sortByGroups(tasks[0]);
+							
+							Task taskToBeRemoved = null;
+							
+							// Now we iterate through the sorted set and find the task that we want to remove
+							int k = 0;
+							for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
+								if (k++ == indicies[0]) {	
+									// Now grab our task from the list
+									taskToBeRemoved = entry.getValue().get(indicies[1]);
+									break;
+								}
+							}
+							
+							// Now we have to search through our other list to find the proper index
+							k = 0;
+							for (Task t: tasks[0]) {
+								if (t == taskToBeRemoved) {
+									index = k;
+									break;
+								}
+								k++;
+							}
+							
+						} else {
+							// Otherwise we can just grab the one index and remove that entry
+							index = Integer.parseInt(args[1]);
+						}
 						
 						String[] newTasks = new String[tasks[0].length - 1];
 						
@@ -296,11 +334,11 @@ public class jTodo {
 							completedTasks[j++] = t.toString();
 						}
 						
-						// We do index - 1 because our list is 1-indexed
 						tasks[0][index].setDone(date.get(Calendar.DAY_OF_YEAR));
 						completedTasks[completedTasks.length - 1] = tasks[0][index].toString();
 						
 						List.write(newTasks, completedTasks);
+							
 						
 						// Decide on what to say for removing the task
 						System.out.println(Task.FINISHED_TASKS[new Random().nextInt(Task.FINISHED_TASKS.length)]);
@@ -434,11 +472,13 @@ public class jTodo {
 					List.print(date);
 					
 					break;
+					
 				case "-mkconfig":
 /****** MAKE CONFIG *******/
 					Config.makeConfig();
 					
 					break;
+					
 				case "-toggle-color":
 /****** TOGGLE COLOR ******/
 					Config.toggleColor();
@@ -449,9 +489,13 @@ public class jTodo {
 						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 					} else
 						List.write(new String[] {}, new String[] {}); // Empty list
+					
+					// And now print our list
+					List.print(date);
 					break;
+					
 				case "-toggle-groups":
-/****** TOGGLE Groups ******/
+/****** TOGGLE GROUPS ******/
 					Config.toggleGroups();
 					
 					read = List.read(false);
@@ -460,13 +504,17 @@ public class jTodo {
 						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 					} else
 						List.write(new String[] {}, new String[] {}); // Empty list
+					
+					// And now print our list
+					List.print(date);
 					break;
 
 				case "-completed":
 					
-/****** COMPLETED ******/
+/****** PRINT COMPLETED ******/
 					List.printCompleted(date);
 					break;
+					
 				default:
 /******* INVALID *******/
 					System.out.println("Invalid task!");

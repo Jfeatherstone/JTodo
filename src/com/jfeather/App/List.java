@@ -207,26 +207,14 @@ public class List {
 					System.out.println();
 				
 				} else {
-					// First we want to find how many groups we have and sort each task into its category
-					HashMap<String, ArrayList<Task>> taskMap = new HashMap<>();
 					
-					for (int i = 0; i < tasks.length; i++) {
-						// Grab the map, in case there are other tasks that were already put in the group
-						ArrayList<Task> tasksInThisGroup = taskMap.get(tasks[i].getGroup());
-						
-						// If there weren't any, we create the list
-						if (tasksInThisGroup == null)
-							tasksInThisGroup = new ArrayList<>();
-						
-						// Add the task to the list and put it back in the map
-						tasksInThisGroup.add(tasks[i]);
-						taskMap.put(tasks[i].getGroup(), tasksInThisGroup);
-					}
+					HashMap<String, ArrayList<Task>> taskMap = sortByGroups(tasks);
 					
 					// Now iterate through every group and display tasks
+					int j = 0;
 					for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
 						// Print out the group name
-						System.out.println("** " + entry.getKey().toUpperCase() + " **");
+						System.out.println(j++ + ". ** " + entry.getKey().toUpperCase() + " **");
 						
 						int i = 0;
 						int indentSpaces = ("" + entry.getValue().size()).length();
@@ -241,12 +229,39 @@ public class List {
 		}
 	}
 	
+	public static HashMap<String, ArrayList<Task>> sortByGroups(Task[] tasks) {
+		// First we want to find how many groups we have and sort each task into its category
+		HashMap<String, ArrayList<Task>> taskMap = new HashMap<>();
+		
+		for (int i = 0; i < tasks.length; i++) {
+			// Grab the map, in case there are other tasks that were already put in the group
+			ArrayList<Task> tasksInThisGroup = taskMap.get(tasks[i].getGroup());
+			
+			// If there weren't any, we create the list
+			if (tasksInThisGroup == null)
+				tasksInThisGroup = new ArrayList<>();
+			
+			// Add the task to the list and put it back in the map
+			tasksInThisGroup.add(tasks[i]);
+			taskMap.put(tasks[i].getGroup(), tasksInThisGroup);
+		}
+		
+		return taskMap;
+
+	}
+	
 	public static void printCompleted(Calendar date) {
+		
+		// Read in the completed tasks (note the 1 index, as opposed to 0 in most other places)
 		Task[] tasks = List.read(true)[1];
+		
+		// If we have no tasks
 		if (tasks.length == 0) {
 			System.out.println("No completed tasks...");
 			System.out.println("Better get to work!");
 		} else {
+			// Otherwise just print out the tasks
+			// No support for color in this part yet, working on overhauling the color system as of now (update 1.9)
 			System.out.println("******* Completed Tasks *******");
 
 			for (int j = tasks.length - 1; j > 0; j--) {
