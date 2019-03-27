@@ -6,13 +6,13 @@
 !Active!
 Some task /79/-1/Group
 Some task /79/-1/Group
+Another task /-1/-1/group2
 Another task /-1/-1/Group2
 Another task /-1/-1/Group2
 Another task /-1/-1/Group2
-Another task /-1/-1/Group2
-A third task2 /-1/-1/Group3
-A third task3 /-1/-1/Group3
-A third task4 /-1/-1/Group3
+A third task2 /-1/-1/group2
+A third task3 /-1/-1/group2
+A third task4 /-1/-1/group2
 !Active!
 
 # The config settings for jTodo

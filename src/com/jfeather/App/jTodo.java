@@ -665,6 +665,7 @@ public class jTodo {
 						 + "-o			--	Order all of the entries in the list by due date\n\n"
 						 + "-h			--	Show help (this menu)\n\n"
 						 + "-v			--	Show version\n\n"
+						 + "-m [i]/[i][j] <group>	--	Move a task to another group\n\n"
 						 + "--mkconfig		--	Use the config setup wizard\n\n"
 						 + "--completed		--	Show the ten most recently completed tasks\n\n"
 						 + "--toggle-color		--	Enable or disable colored output (ANSI)\n\n"
