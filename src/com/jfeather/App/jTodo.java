@@ -105,6 +105,8 @@ public class jTodo {
 			if (args[0].substring(0, 1).equals("-")) {
 				
 				Task[][] read;
+				int index;
+				
 				// Based on the option
 				switch (args[0].substring(1, args[0].length())) {
 				case "a": 
@@ -279,7 +281,7 @@ public class jTodo {
 					try {
 						
 						Task[][] tasks = List.read(false);
-						int index = -1;
+						index = -1;
 						
 						if (Config.areGroupsEnabled()) {
 							// If groups are enabled, the user must provide two indicies
@@ -355,7 +357,7 @@ public class jTodo {
 /****** EXTEND *******/
 					boolean foundIndex = false;
 					boolean foundExtension = false;
-					int index = -1;
+					index = -1;
 					try {
 						
 						index = (Integer.parseInt(args[1])) - 1;
@@ -423,8 +425,45 @@ public class jTodo {
 /****** PRIOTIZE *******/
 					try {
 						
-						index = (Integer.parseInt(args[1])) - 1;
 						Task[][] tasks = List.read(false);
+
+						index = -1;
+						
+						if (Config.areGroupsEnabled()) {
+							// If groups are enabled, the user must provide two indicies
+							// The first will be for the group number and second for the task number
+							int indicies[] = new int[] {Integer.parseInt(args[1]), Integer.parseInt(args[2])};
+							
+							// Now we sort our tasks by group
+							HashMap<String, ArrayList<Task>> taskMap = List.sortByGroups(tasks[0]);
+							
+							Task taskToBeRemoved = null;
+							
+							// Now we iterate through the sorted set and find the task that we want to remove
+							int k = 0;
+							for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
+								if (k++ == indicies[0]) {	
+									// Now grab our task from the list
+									taskToBeRemoved = entry.getValue().get(indicies[1]);
+									break;
+								}
+							}
+							
+							// Now we have to search through our other list to find the proper index
+							k = 0;
+							for (Task t: tasks[0]) {
+								if (t == taskToBeRemoved) {
+									index = k;
+									break;
+								}
+								k++;
+							}
+							
+						} else {
+							// Otherwise we can just grab the one index and remove that entry
+							index = Integer.parseInt(args[1]);
+						}
+						
 						
 						
 						String[] newTasks = new String[tasks[0].length];
@@ -473,6 +512,69 @@ public class jTodo {
 					
 					break;
 					
+				case "m":
+/****** MOVE GROUP *******/
+					
+					read = List.read(false);
+					
+					try {
+					
+						Task[][] tasks = List.read(false);
+
+						index = -1;
+						String newGroup = null;
+						
+						if (Config.areGroupsEnabled()) {
+							// If groups are enabled, the user must provide two indicies
+							// The first will be for the group number and second for the task number
+							int indicies[] = new int[] {Integer.parseInt(args[1]), Integer.parseInt(args[2])};
+							
+							// Now we sort our tasks by group
+							HashMap<String, ArrayList<Task>> taskMap = List.sortByGroups(tasks[0]);
+							
+							Task taskToBeRemoved = null;
+							
+							// Now we iterate through the sorted set and find the task that we want to remove
+							int k = 0;
+							for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
+								if (k++ == indicies[0]) {	
+									// Now grab our task from the list
+									taskToBeRemoved = entry.getValue().get(indicies[1]);
+									break;
+								}
+							}
+							
+							// Now we have to search through our other list to find the proper index
+							k = 0;
+							for (Task t: tasks[0]) {
+								if (t == taskToBeRemoved) {
+									index = k;
+									break;
+								}
+								k++;
+							}
+							
+							newGroup = args[3];
+							
+						} else {
+							// Otherwise we can just grab the one index and remove that entry
+							index = Integer.parseInt(args[1]);
+							newGroup = args[2];
+						}
+						
+						read[0][index].setGroup(newGroup);
+
+						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
+						
+						List.print(date);
+
+					} catch (NumberFormatException ex) {
+						System.out.println("Invalid task index!");
+					}
+					
+					
+					break;
+				
 				case "-mkconfig":
 /****** MAKE CONFIG *******/
 					Config.makeConfig();
@@ -542,6 +644,7 @@ public class jTodo {
 	
 	public static void printHelp() {
 		printVersion();
+		// TODO: Update this whenever we add new commands
 		System.out.println("   Created by Jack Featherstone\n\n"
 						 + "todo [options] [parameters]\n\n"
 						 + "[EXAMPLES]\n"

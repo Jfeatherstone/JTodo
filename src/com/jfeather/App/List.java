@@ -210,6 +210,7 @@ public class List {
 					
 					HashMap<String, ArrayList<Task>> taskMap = sortByGroups(tasks);
 					
+					//System.out.println(taskMap.size());
 					// Now iterate through every group and display tasks
 					int j = 0;
 					for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
@@ -218,7 +219,9 @@ public class List {
 						
 						int i = 0;
 						int indentSpaces = ("" + entry.getValue().size()).length();
-
+						
+						//System.out.println(entry.getValue().size());
+						
 						for (Task t: entry.getValue()) {
 							System.out.print("    ");
 							t.printTask(i++, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
@@ -235,7 +238,9 @@ public class List {
 		
 		for (int i = 0; i < tasks.length; i++) {
 			// Grab the map, in case there are other tasks that were already put in the group
-			ArrayList<Task> tasksInThisGroup = taskMap.get(tasks[i].getGroup());
+			ArrayList<Task> tasksInThisGroup = taskMap.get(tasks[i].getGroup().toLowerCase());
+			
+			//System.out.println(tasks[i]);
 			
 			// If there weren't any, we create the list
 			if (tasksInThisGroup == null)
@@ -243,7 +248,9 @@ public class List {
 			
 			// Add the task to the list and put it back in the map
 			tasksInThisGroup.add(tasks[i]);
-			taskMap.put(tasks[i].getGroup(), tasksInThisGroup);
+			taskMap.put(tasks[i].getGroup().toLowerCase(), tasksInThisGroup);
+			
+			//System.out.println(tasksInThisGroup);
 		}
 		
 		return taskMap;

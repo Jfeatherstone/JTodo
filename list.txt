@@ -4,32 +4,22 @@
 
 # Todo tasks:
 !Active!
-Setup grub theme /-1/-1/test
-Setup fusion or freecad natively or with wine /-1/-1/default
-Properly format and setup my usb card /-1/-1/test
-Fix internal collisions is SFMLC /-1/-1/default
-Add intersection tolerances in SFMLC /-1/-1/default
-Optimize vertex reduction in SFMLC /-1/-1/test
-Refactor wack ass constructor for polygons /-1/-1/default
-Add groups to jTodo /-1/-1/test
-Testerino /-1/-1/test
+Some task /79/-1/Group
+Some task /79/-1/Group
+Another task /-1/-1/Group2
+Another task /-1/-1/Group2
+Another task /-1/-1/Group2
+Another task /-1/-1/Group2
+A third task2 /-1/-1/Group3
+A third task3 /-1/-1/Group3
+A third task4 /-1/-1/Group3
 !Active!
 
 # The config settings for jTodo
 :enable_color=false # Possible values: true or 1 will enable, while false or 0 will disable
 # Enabling groups will display the current tasks in group form (which is specified by todo -a <task> <-g <group>>
-:enable_groups=false # Possible values: true or 1 will enable, while false or 0 will disable
+:enable_groups=true # Possible values: true or 1 will enable, while false or 0 will disable
 :color_type=8
 
 !Completed!
-Finish thermo write up /-1/60/default
-An hour of computer maitenance /-1/62/default
-Implement collision resultant in SFMLC /-1/62/default
-Mech homework /65/62/default
-Make jTodo not a clown fiesta /-1/64/default
-Fix wifi issue on sleep /-1/64/default
-Reverse order of completed tasks in jTodo /-1/65/default
-Testerino /-1/65/default
-Testerino /-1/65/default
-Group testing /-1/65/FancyGroup
 !Completed!
