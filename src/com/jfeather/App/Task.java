@@ -77,28 +77,11 @@ public class Task {
 			spaces += " ";
 		}
 		
-		if (Config.isColorEnabled()) {
-			/*
-			 * Currently only rainbow mode is implemented for printing modes
-			 */
-			
-			if (yearDayDue != -1)
-				System.out.println(Color.ANSI_RAINBOW[index % Color.ANSI_RAINBOW.length] +
-						(index) + ". " + description + " (" + getDaysUntilDue(dayOfYear) + ")" + 
-						Color.reset());
-			else
-				System.out.println(Color.ANSI_RAINBOW[index % Color.ANSI_RAINBOW.length] + 
-						(index) + ". " + description +
-						Color.reset());
-
-		} else {
-
-			if (yearDayDue != -1)
-				System.out.println(index + "." + spaces + description + " (" + getDaysUntilDue(dayOfYear) + ")");
-			else
-				System.out.println(index + ". " + spaces + description);
-			
-		}
+		if (yearDayDue != -1)
+			System.out.println(index + ". " + spaces + description + " (" + getDaysUntilDue(dayOfYear) + ")");
+		else
+			System.out.println(index + ". " + spaces + description);
+		
 	}
 	
 	public void printCompletedTask(int index, int currentDay) {

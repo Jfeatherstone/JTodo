@@ -9,34 +9,82 @@ public class Color {
 	 * 
 	 * By default, color printing will be disabled, but the first time run process should hopefully deal with this properly
 	 * and alert the user how to enable color
+	 * 
+	 * The following are some selected 256 ANSI colors that I liked, feel free to change them if you prefer another scheme
 	 */
+	
 	public static final String ANSI_RESET = "\u001B[0m";
-	public static final String ANSI_BLACK = "\u001B[30m";
-	public static final String ANSI_RED = "\u001B[31m";
-	public static final String ANSI_GREEN = "\u001B[32m";
-	public static final String ANSI_YELLOW = "\u001B[33m";
-	public static final String ANSI_BLUE = "\u001B[34m";
-	public static final String ANSI_PURPLE = "\u001B[35m";
-	public static final String ANSI_CYAN = "\u001B[36m";
-	public static final String ANSI_WHITE = "\u001B[37m";
 	
-	public static final String[] ANSI_RAINBOW = {ANSI_RED, ANSI_YELLOW, ANSI_GREEN, ANSI_BLUE, ANSI_PURPLE};
-
-	/*
-	 * If a terminal supports 16 color ANSI (regular and bright colors) we can also use the following
-	 */
+	public static final String ANSI_BLACK = "\u001b[38;5;0m";
+	public static final String ANSI_RED = "\u001b[38;5;88m";
+	public static final String ANSI_GREEN = "\u001b[38;5;10m";
+	public static final String ANSI_YELLOW = "\u001b[38;5;221m";
+	public static final String ANSI_BLUE = "\u001b[38;5;12m";
+	public static final String ANSI_PURPLE = "\u001b[38;5;92m";
+	public static final String ANSI_CYAN = "\u001b[38;5;14m";
+	public static final String ANSI_WHITE = "\u001b[38;5;7m";
 	
-	/*
-	 * Finally, the highest level of ANSI coloring allows for 256 different colors, through a code system
-	 */
-	public static final String ANSI_256_TEST = "\u001b[38;5;13m";
-
+	// This array is used for non-group mode to show urgency as far as color
+	public static final String[] ANSI_URGENCY = {ANSI_RED, ANSI_YELLOW, ANSI_GREEN, ANSI_BLUE, ANSI_PURPLE};
+	
+	// For group mode, we want to be able to have colors be the same for each group, varying slightly with urgency
+	// because of this, we make this color array two dimensional, with each sub array containing varying hues of similar colors
+	// Maximum of 5 different colored groups before the pattern repeats
+	// ordered as: red, green, blue, violet, teal
+	public static final int[][] ANSI_URGENCY_GROUPED = {{196, 1, 88, 9}, {2, 22, 70, 82}, {63, 27, 12, 38}, {200, 219, 111, 134}, {45, 75, 117, 105}};
+	
 	public static String reset() {
 		return ANSI_RESET;
+	}
+	
+	public static String titleColor() {
+		return ANSI_WHITE;
 	}
 	
 	public static String errorColor() {
 		return ANSI_RED;
 	}
 	
+	public static String colorFromInt(int value) {
+		return "\u001b[38:5:" + value + "m";
+	}
+	
+	public static int[] relativeRankDueDates(int[] dueDates) {
+		// This will relatively rank the due dates
+		// This only returns possible values from 0-3 (since we have 4 colors per group
+		int max = -1, min = 1000;
+		
+		// Find the max and min
+		for (int i: dueDates) {
+			if (i > max)
+				max = i;
+			if (i < min)
+				min = i;
+		}
+		
+		// Now adjust so that the values are relative
+		for (int i = 0; i < dueDates.length; i++) {
+			dueDates[i] -= min;
+		}
+		max -= min;
+		
+		double increment = ((double)max) / 4;
+		
+		int[] colors = new int[dueDates.length];
+		
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < dueDates.length; j++) {
+				if (dueDates[j] == -1) {
+					// Least priority if there is no due date
+					colors[j] = 3;
+					continue;
+				}
+				if (dueDates[j] > i*increment && dueDates[j] < (i+1)*increment) {
+					colors[j] = i;
+				}
+			}
+		}	
+		
+		return colors;
+	}
 }

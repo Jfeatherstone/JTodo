@@ -195,7 +195,7 @@ public class List {
 					int indentSpaces = ("" + tasks.length).length();
 					
 					if (Config.isColorEnabled())
-						System.out.println(Color.ANSI_256_TEST + "******* TODO LIST *******" + Color.reset());
+						System.out.println(Color.titleColor() + "******* TODO LIST *******" + Color.reset());
 					else
 						System.out.println("******* TODO LIST *******");
 	
@@ -207,24 +207,54 @@ public class List {
 					System.out.println();
 				
 				} else {
+					// Groups
 					
 					HashMap<String, ArrayList<Task>> taskMap = sortByGroups(tasks);
 					
-					//System.out.println(taskMap.size());
-					// Now iterate through every group and display tasks
-					int j = 0;
-					for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
-						// Print out the group name
-						System.out.println(j++ + ". ** " + entry.getKey().toUpperCase() + " **");
-						
-						int i = 0;
-						int indentSpaces = ("" + entry.getValue().size()).length();
-						
-						//System.out.println(entry.getValue().size());
-						
-						for (Task t: entry.getValue()) {
-							System.out.print("    ");
-							t.printTask(i++, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
+					if (!Config.isColorEnabled()) {
+						//System.out.println(taskMap.size());
+						// Now iterate through every group and display tasks
+						int j = 0;
+						for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
+							// Print out the group name
+							System.out.println(j++ + ". ** " + entry.getKey().toUpperCase() + " **");
+							
+							int i = 0;
+							int indentSpaces = ("" + entry.getValue().size()).length();
+							
+							//System.out.println(entry.getValue().size());
+							
+							for (Task t: entry.getValue()) {
+								System.out.print("    ");
+								t.printTask(i++, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
+							}
+						}
+					} else {
+						// Color
+						//System.out.println(taskMap.size());
+						// Now iterate through every group and display tasks
+						int j = 0;
+						for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
+										
+							// Fetch our colors for each entry
+							int[] dueDates = new int[entry.getValue().size()];
+							for (int i = 0; i < dueDates.length; i++) {
+								dueDates[i] = entry.getValue().get(i).getYearDayDue();
+							}
+							int[] colors = Color.relativeRankDueDates(dueDates);
+							// Print out the group name
+							System.out.println(Color.titleColor() + j++ + ". ** " + entry.getKey().toUpperCase() + " **" + Color.reset());
+							
+							int i = 0;
+							int indentSpaces = ("" + entry.getValue().size()).length();
+							
+							//System.out.println(entry.getValue().size());
+							
+							for (Task t: entry.getValue()) {
+								System.out.print(Color.colorFromInt(Color.ANSI_URGENCY_GROUPED[(j-1)%5][colors[i]]) + "    ");
+								t.printTask(i++, date.get(Calendar.DAY_OF_YEAR), indentSpaces);
+								System.out.print(Color.reset());
+							}
 						}
 					}
 				}
