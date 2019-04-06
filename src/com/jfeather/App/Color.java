@@ -1,5 +1,9 @@
 package com.jfeather.App;
 
+import java.sql.Date;
+import java.util.Arrays;
+import java.util.Calendar;
+
 public class Color {
 
 	/*
@@ -49,10 +53,11 @@ public class Color {
 		return "\u001b[38:5:" + value + "m";
 	}
 	
-	public static int[] relativeRankDueDates(int[] dueDates) {
+	public static int[] relativeRankDueDates(int[] dueDates, Calendar date) {
 		// This will relatively rank the due dates
 		// This only returns possible values from 0-3 (since we have 4 colors per group
-		int max = -1, min = 1000;
+		int max = 0, min = 1000;
+		
 		
 		// Find the max and min
 		for (int i: dueDates) {
@@ -62,25 +67,33 @@ public class Color {
 				min = i;
 		}
 		
+		if (min == -1)
+			min = date.get(Calendar.DAY_OF_YEAR);
+		if (min > max)
+			max = min;
+		
+		
 		// Now adjust so that the values are relative
 		for (int i = 0; i < dueDates.length; i++) {
-			dueDates[i] -= min;
+			if (dueDates[i] != -1)
+				dueDates[i] -= min;
 		}
 		max -= min;
 		
-		double increment = ((double)max) / 4;
-		
+
+		double increment = ((double)max) / 3;
 		int[] colors = new int[dueDates.length];
 		
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < dueDates.length; j++) {
 				if (dueDates[j] == -1) {
 					// Least priority if there is no due date
 					colors[j] = 3;
 					continue;
 				}
-				if (dueDates[j] > i*increment && dueDates[j] < (i+1)*increment) {
+				if (dueDates[j] >= i*increment && dueDates[j] <= (i+1)*increment) {
 					colors[j] = i;
+					continue;
 				}
 			}
 		}	

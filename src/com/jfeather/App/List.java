@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,16 +60,8 @@ public class List {
 			bw.write(":enable_groups=" + Config.areGroupsEnabled() + " # Possible values: true or 1 will enable, while false or 0 will disable");
 			bw.newLine();
 
-			// This way we default to 8 if there is not real color type
-			if (Config.getColorType() == ColorType.TYPE_256)
-				bw.write(":color_type=256");
-			else if (Config.getColorType() == ColorType.TYPE_16)
-				bw.write(":color_type=16");
-			else
-				bw.write(":color_type=8");
 
 			// Now we write the completed tasks
-			bw.newLine();
 			bw.newLine();
 			bw.write(COMPLETED_INDICATOR);
 			bw.newLine();
@@ -231,6 +224,7 @@ public class List {
 						}
 					} else {
 						// Color
+						
 						//System.out.println(taskMap.size());
 						// Now iterate through every group and display tasks
 						int j = 0;
@@ -241,7 +235,9 @@ public class List {
 							for (int i = 0; i < dueDates.length; i++) {
 								dueDates[i] = entry.getValue().get(i).getYearDayDue();
 							}
-							int[] colors = Color.relativeRankDueDates(dueDates);
+							int[] colors = Color.relativeRankDueDates(dueDates, date);
+							//System.out.println(Arrays.toString(colors));
+							
 							// Print out the group name
 							System.out.println(Color.titleColor() + j++ + ". ** " + entry.getKey().toUpperCase() + " **" + Color.reset());
 							

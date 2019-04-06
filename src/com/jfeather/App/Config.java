@@ -22,7 +22,6 @@ public class Config {
 	private static boolean enableGroups = false;
 	private static boolean enableColor = false; // Default value is disabled for compatability issues
 	private static String filePath = "list.txt"; // This shouldn't ever change as of v1.6
-	private static ColorType colorType = ColorType.TYPE_8; // Default value is lowest number of colors
 	
 	/****************************************
 	 * GETTERS
@@ -35,11 +34,7 @@ public class Config {
 	public static String getFilePath() {
 		return filePath;
 	}
-	
-	public static ColorType getColorType() {
-		return colorType;
-	}
-	
+		
 	public static void toggleColor() {
 		System.out.println("Color toggled!");
 		enableColor = !enableColor;
@@ -114,40 +109,6 @@ public class Config {
 									enableColor = false;
 								
 								break;
-								
-							/******* COLOR TYPE ********/
-							/*
-							 * COLOR TYPE
-							 * 
-							 * ANSI has three different levels of colors that may or may not be supported in any given terminal:
-							 * 
-							 * - 8 Color:
-							 * 		This is the most basic type, and supports any of the following eight colors: black, red, green, yellow, blue,
-							 * 		purple, cyan, and white.
-							 * 
-							 * - 16 Color:
-							 * 		This is the intermediate level of color detail, and includes all of the colors in the 8 color set, along with a bright or bold
-							 *		version of each one
-							 *
-							 * - 256 Color:
-							 * 		The most extensive set offered by ANSI has a total of 256 colors 
-							 */
-							case "color_type":
-								
-								switch (value.trim()) {
-									case "8":
-										colorType = ColorType.TYPE_8;
-										break;
-									case "16":
-										colorType = ColorType.TYPE_16;
-										break;
-									case "256":
-										colorType = ColorType.TYPE_256;
-										break;
-								}
-								
-								break;
-							
 							/******* ENABLE GROUPS ********/
 							case "enable_groups":
 								
