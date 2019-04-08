@@ -1,6 +1,6 @@
 # TodoList
 
-[Screenshot](https://raw.githubusercontent.com/Jfeatherstone/jTodo/master/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/Jfeatherstone/jTodo/master/screenshot.png)
 
 This is just a simple CLI-based todo list made in Java. It is heavily inspired by aesophor's py-todo that can be found below:
 
