@@ -35,5 +35,8 @@ unzip Todo.jar && ./install.sh
 This will generate the folder ~/.config/jTodo/ with the jar file and uninstall script inside, along with the todo file in /usr/bin/ to call the jar file. On the first time running the program, the config creation wizard will run to setup the list file in the same directory.
 
 ## [Configuration]
-
+The configuration file for jTodo is located at /home/USER/.config/jTodo/list.txt by default, which also contains the current and recently completed todo tasks. It is not recommended to change the settings manually, as they will likely be overwritten on the next write, and instead to use the built in settings wizard:
+```
+todo --mkconfig
+```
 
