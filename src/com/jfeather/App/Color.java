@@ -35,10 +35,10 @@ public class Color {
 	// because of this, we make this color array two dimensional, with each sub array containing varying hues of similar colors
 	// Maximum of 5 different colored groups before the pattern repeats
 	// ordered as: red, green, blue, violet, teal
-	public static final int[][] ANSI_URGENCY_GROUPED = {{196, 1, 88, 9}, {2, 22, 70, 82}, {63, 27, 12, 38}, {200, 219, 111, 134}, {45, 75, 117, 105}};
+	public static final int[][] ANSI_URGENCY_GROUPED = {{196, 160, 202, 208}, {2, 70, 22, 82}, {63, 27, 12, 38}, {200, 219, 111, 134}, {45, 117, 75, 105}};
 	
 	public static String reset() {
-		return ANSI_RESET;
+		return ANSI_RESET; 
 	}
 	
 	public static String titleColor() {
