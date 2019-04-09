@@ -60,7 +60,7 @@ public class Task {
 	}
 	
 	public String getDaysUntilDue(int dayOfYear) {
-		if (yearDayDue - dayOfYear > 2)
+		if (yearDayDue - dayOfYear >= 2)
 			return yearDayDue - dayOfYear + " days";
 		else if (yearDayDue - dayOfYear == 1)
 			return "Tomorrow";
