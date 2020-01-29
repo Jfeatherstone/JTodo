@@ -298,7 +298,7 @@ public class List {
 			System.out.println("******* Completed Tasks *******");
 
 			for (int j = tasks.length - 1; j > 0; j--) {
-				tasks[j].printCompletedTask((tasks.length - j + 1), date.get(Calendar.DAY_OF_YEAR));
+				tasks[j].printCompletedTask((tasks.length - j - 1), date.get(Calendar.DAY_OF_YEAR));
 			}
 		}
 	}

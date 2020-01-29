@@ -337,10 +337,19 @@ public class jTodo {
 							newTasks[h-offset] = read[0][h].toString();
 						}
 						
-						String[] completedTasks = new String[read[1].length + 1];
-						int j = 0;
-						for (Task t: read[1]) {
-							completedTasks[j++] = t.toString();
+						// We want to cap off the number of completed tasks at 10
+						int completedLength = 10;
+						
+						if (read[1].length < completedLength) {
+							completedLength = read[1].length + 1;
+						}
+						
+						System.out.println(completedLength);
+						
+						String[] completedTasks = new String[completedLength];
+						// We want to copy all of the old tasks except the oldest one (which is the first one)
+						for (int j = 0; j < completedLength - 1; j++) {
+							completedTasks[j] = read[1][j+1].toString();
 						}
 						
 						read[0][index].setDone(date.get(Calendar.DAY_OF_YEAR));
