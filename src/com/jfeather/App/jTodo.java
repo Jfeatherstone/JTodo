@@ -369,7 +369,7 @@ public class jTodo {
 						
 					} catch (Exception ex) {
 						System.out.println("Invalid task index!");
-						ex.printStackTrace();
+						//ex.printStackTrace();
 					}
 					
 					break;
@@ -558,7 +558,7 @@ public class jTodo {
 						
 					} catch (Exception ex) {
 						System.out.println("Invalid task index!");
-						ex.printStackTrace();
+						//ex.printStackTrace();
 					}
 
 					break;
@@ -657,7 +657,7 @@ public class jTodo {
 						
 						List.print(date);
 
-					} catch (NumberFormatException ex) {
+					} catch (Exception ex) {
 						System.out.println("Invalid task index!");
 					}
 					
@@ -746,24 +746,24 @@ public class jTodo {
 						 + "todo -a [task] 			-> Add a new task\n"
 						 + "todo -a [task] -d [n]		-> Add a new task, due in n days\n\n"
 						 + "[OPTIONS]\n"
-						 + "-a or --add [task]			--	Add a task to the list\n"
-						 + "							If you append -d <date>, it will set a due date in one of 3 formats:\n"
-						 + "							1. In the number of days specified (\"4\")\n"
-						 + "							2. On the date specified (\"12/31\")\n"
-						 + "							3. On the next weekday (\"Wednesday\")\n"
-						 + "							You can also use -g <group> to specific a group for the task\n\n"
-						 + "-r or --remove [n]			--	Remove the nth task from the list\n\n"
-						 + "-e or --edit [n] [d]			--	Extend the nth task's due date by d days\n\n"
-						 + "-p or --prioritize [n]			--	Priorize the nth task, moving it to the top of the list\n\n"
-						 + "-c or --clear				--	Clear all entries in the list (active and completed)\n\n"
-						 + "-o or --order				--	Order all of the entries in the list by due date\n\n"
-						 + "-h or --help 				--	Show help (this menu)\n\n"
-						 + "-v or --version				--	Show version\n\n"
-						 + "-m or --move [i]/[i][j] [group]		--	Move a task to another group\n\n"
-						 + "--mkconfig				--	Use the config setup wizard\n\n"
-						 + "--completed				--	Show the ten most recently completed tasks\n\n"
-						 + "--toggle-color				--	Enable or disable colored output (ANSI)\n\n"
-						 + "--toggle-groups				--	Enable or disable display tasks by group\n\n"
+						 + "-a or --add [task]		--	Add a task to the list\n"
+						 + "						If you append -d <date>, it will set a due date in one of 3 formats:\n"
+						 + "						1. In the number of days specified (\"4\")\n"
+						 + "						2. On the date specified (\"12/31\")\n"
+						 + "						3. On the next weekday (\"Wednesday\")\n"
+						 + "						You can also use -g <group> to specific a group for the task\n\n"
+						 + "-r or --remove [n]		--	Remove the nth task from the list\n\n"
+						 + "-e or --edit [n] [d]		--	Extend the nth task's due date by d days\n\n"
+						 + "-p or --prioritize [n]		--	Priorize the nth task, moving it to the top of the list\n\n"
+						 + "-c or --clear			--	Clear all entries in the list (active and completed)\n\n"
+						 + "-o or --order			--	Order all of the entries in the list by due date\n\n"
+						 + "-h or --help 			--	Show help (this menu)\n\n"
+						 + "-v or --version			--	Show version\n\n"
+						 + "-m or --move [i]/[i][j] [group]	--	Move a task to another group\n\n"
+						 + "--mkconfig			--	Use the config setup wizard\n\n"
+						 + "--completed			--	Show the ten most recently completed tasks\n\n"
+						 + "--toggle-color			--	Enable or disable colored output (ANSI)\n\n"
+						 + "--toggle-groups			--	Enable or disable display tasks by group\n\n"
 						 + "NOTE: At most, only one option above should be used per command");
 	}
 	
