@@ -1,6 +1,7 @@
 package com.jfeather.App;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Task {
 	
@@ -21,6 +22,8 @@ public class Task {
 		
 		String[] arr = splitBySlash(unparsedLine);
 				
+		//System.out.println(Arrays.toString(arr));
+		
 		description = arr[0];
 		if (arr[1].equals("-"))
 			yearDayDue = -1;
@@ -51,8 +54,11 @@ public class Task {
 		return description;
 	}
 	
-	public void extendDueDate(int numDays) {
-		yearDayDue += numDays;
+	public void extendDueDate(int currentDay, int numDays) {
+		if (yearDayDue == -1)
+			yearDayDue = currentDay + numDays;
+		else
+			yearDayDue += numDays;
 	}
 	
 	public int getYearDayDue() {

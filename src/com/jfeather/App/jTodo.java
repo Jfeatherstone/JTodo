@@ -104,12 +104,14 @@ public class jTodo {
 			// First, we should check to see if we have an option
 			if (args[0].substring(0, 1).equals("-")) {
 				
-				Task[][] read;
+				Task[][] read = List.read(false);
 				int index;
 				
 				// Based on the option
 				switch (args[0].substring(1, args[0].length())) {
 				
+				
+/****** ADD *******/
 				case "-add":
 				case "a": 
 /****** ADD *******/
@@ -277,23 +279,24 @@ public class jTodo {
 						List.print(date);
 					}
 					break;
-					
+				
+/****** REMOVE *******/
 				case "-remove":
 				case "r":
 /****** REMOVE *******/
 					
 					try {
 						
-						Task[][] tasks = List.read(false);
+						read = List.read(false);
 						index = -1;
 						
 						if (Config.areGroupsEnabled()) {
-							// If groups are enabled, the user must provide two indicies
+							// If groups are enabled, the user must provide two indices
 							// The first will be for the group number and second for the task number
 							int indicies[] = new int[] {Integer.parseInt(args[1]), Integer.parseInt(args[2])};
 							
 							// Now we sort our tasks by group
-							HashMap<String, ArrayList<Task>> taskMap = List.sortByGroups(tasks[0]);
+							HashMap<String, ArrayList<Task>> taskMap = List.sortByGroups(read[0]);
 							
 							Task taskToBeRemoved = null;
 							
@@ -306,10 +309,10 @@ public class jTodo {
 									break;
 								}
 							}
-							
+														
 							// Now we have to search through our other list to find the proper index
 							k = 0;
-							for (Task t: tasks[0]) {
+							for (Task t: read[0]) {
 								if (t == taskToBeRemoved) {
 									index = k;
 									break;
@@ -322,26 +325,26 @@ public class jTodo {
 							index = Integer.parseInt(args[1]);
 						}
 						
-						String[] newTasks = new String[tasks[0].length - 1];
+						String[] newTasks = new String[read[0].length - 1];
 						
 						int offset = 0;
 						
-						for (int h = 0; h < tasks[0].length; h++) {
+						for (int h = 0; h < read[0].length; h++) {
 							if (h == index) {
 								offset = 1;
 								continue;
 							}
-							newTasks[h-offset] = tasks[0][h].toString();
+							newTasks[h-offset] = read[0][h].toString();
 						}
 						
-						String[] completedTasks = new String[tasks[1].length + 1];
+						String[] completedTasks = new String[read[1].length + 1];
 						int j = 0;
-						for (Task t: tasks[1]) {
+						for (Task t: read[1]) {
 							completedTasks[j++] = t.toString();
 						}
 						
-						tasks[0][index].setDone(date.get(Calendar.DAY_OF_YEAR));
-						completedTasks[completedTasks.length - 1] = tasks[0][index].toString();
+						read[0][index].setDone(date.get(Calendar.DAY_OF_YEAR));
+						completedTasks[completedTasks.length - 1] = read[0][index].toString();
 						
 						List.write(newTasks, completedTasks);
 							
@@ -358,24 +361,63 @@ public class jTodo {
 					
 					break;
 					
+/****** EXTEND *******/
 				case "-extend":
 				case "e":
 /****** EXTEND *******/
 					boolean foundIndex = false;
 					boolean foundExtension = false;
 					index = -1;
+					
+					read = List.read(false);
+
 					try {
+						if (Config.areGroupsEnabled()) {
+							// If groups are enabled, the user must provide two indicies
+							// The first will be for the group number and second for the task number
+							int indicies[] = new int[] {Integer.parseInt(args[1]), Integer.parseInt(args[2])};
+							
+							// Now we sort our tasks by group
+							HashMap<String, ArrayList<Task>> taskMap = List.sortByGroups(read[0]);
+							
+							Task taskToBeRemoved = null;
+							
+							// Now we iterate through the sorted set and find the task that we want to remove
+							int k = 0;
+							for (Map.Entry<String, ArrayList<Task>> entry: taskMap.entrySet()) {
+								if (k++ == indicies[0]) {	
+									// Now grab our task from the list
+									taskToBeRemoved = entry.getValue().get(indicies[1]);
+									break;
+								}
+							}
+														
+							// Now we have to search through our other list to find the proper index
+							k = 0;
+							for (Task t: read[0]) {
+								if (t == taskToBeRemoved) {
+									index = k;
+									break;
+								}
+								k++;
+							}
+							
+						} else {
+							// Otherwise we can just grab the one index and remove that entry
+							index = Integer.parseInt(args[1]);
+						}
 						
-						index = (Integer.parseInt(args[1])) - 1;
+						System.out.println("Found index");
+						
 						foundIndex = true;
-						Task[][] tasks = List.read(false);
+						//Task[][] tasks = List.read(false);
 						
 						int extension = (Integer.parseInt(args[2]));
 						foundExtension = true;
 						
-						tasks[0][index].extendDueDate(extension);
+						read[0][index].extendDueDate(date.get(Calendar.DAY_OF_YEAR), extension);
 												
-						List.write(List.taskToStringArr(tasks[0]), List.taskToStringArr(tasks[1]));
+						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 						System.out.println("Task extended!");
 						
 						List.print(date);
@@ -409,11 +451,11 @@ public class jTodo {
 								}
 								
 								// Now write the new task
-								Task[][] tasks = List.read(false);
-								tasks[0][index].extendDueDate(day - tasks[0][index].getYearDayDue() + date.get(Calendar.DAY_OF_YEAR) - 1);
+								//Task[][] tasks = List.read(false);
+								read[0][index].extendDueDate(date.get(Calendar.DAY_OF_YEAR), day - read[0][index].getYearDayDue() + date.get(Calendar.DAY_OF_YEAR) - 1);
 								
 								
-								List.write(List.taskToStringArr(tasks[0]), List.taskToStringArr(tasks[1]));
+								List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 								System.out.println("Task extended!");
 								
 								List.print(date);
@@ -428,12 +470,13 @@ public class jTodo {
 
 					break;
 				
+/****** PRIORITIZE *******/
 				case "-prioritize":
 				case "p":
 /****** PRIORITIZE *******/
 					try {
 						
-						Task[][] tasks = List.read(false);
+						read = List.read(false);
 
 						index = -1;
 						
@@ -443,7 +486,7 @@ public class jTodo {
 							int indicies[] = new int[] {Integer.parseInt(args[1]), Integer.parseInt(args[2])};
 							
 							// Now we sort our tasks by group
-							HashMap<String, ArrayList<Task>> taskMap = List.sortByGroups(tasks[0]);
+							HashMap<String, ArrayList<Task>> taskMap = List.sortByGroups(read[0]);
 							
 							Task taskToBeRemoved = null;
 							
@@ -459,7 +502,7 @@ public class jTodo {
 							
 							// Now we have to search through our other list to find the proper index
 							k = 0;
-							for (Task t: tasks[0]) {
+							for (Task t: read[0]) {
 								if (t == taskToBeRemoved) {
 									index = k;
 									break;
@@ -474,17 +517,17 @@ public class jTodo {
 						
 						
 						
-						String[] newTasks = new String[tasks[0].length];
+						String[] newTasks = new String[read[0].length];
 						
-						newTasks[0] = tasks[0][index].toString();
+						newTasks[0] = read[0][index].toString();
 						int offset = 1;
-						for (int h = 1; h < tasks[0].length; h++) {
+						for (int h = 1; h < read[0].length; h++) {
 							if (h == index + 1) {
 								offset = 0;
 							}
-							newTasks[h] = tasks[h - offset].toString();
+							newTasks[h] = read[h - offset].toString();
 						}
-						List.write(List.taskToStringArr(tasks[0]), List.taskToStringArr(tasks[1]));
+						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 						System.out.println("Task prioritized!");
 						
 						List.print(date);
@@ -495,19 +538,22 @@ public class jTodo {
 					}
 
 					break;
-				
+					
+/****** VERSION *******/
 				case "-version":
 				case "v":
 /****** VERSION *******/
 					printVersion();
 					break;
-				
+					
+/****** HELP *******/
 				case "-help":
 				case "h":
 /****** HELP *******/
 					printHelp();
 					break;
 					
+/****** CLEAR *******/
 				case "-clear":
 				case "c":
 /****** CLEAR *******/
@@ -517,6 +563,7 @@ public class jTodo {
 					List.print(date);
 					break;
 					
+/****** ORDER *******/	
 				case "-order":
 				case "o":
 /****** ORDER *******/
@@ -528,6 +575,7 @@ public class jTodo {
 					
 					break;
 					
+/****** MOVE GROUP *******/			
 				case "-move":
 				case "m":
 /****** MOVE GROUP *******/
@@ -591,12 +639,15 @@ public class jTodo {
 					
 					
 					break;
+					
+/****** MAKE CONFIG *******/
 				case "-mkconfig":
 /****** MAKE CONFIG *******/
 					Config.makeConfig();
 					
 					break;
-					
+		
+/****** TOGGLE COLOR ******/
 				case "-toggle-color":
 /****** TOGGLE COLOR ******/
 					Config.toggleColor();
@@ -612,6 +663,7 @@ public class jTodo {
 					List.print(date);
 					break;
 					
+/****** TOGGLE GROUPS ******/	
 				case "-toggle-groups":
 /****** TOGGLE GROUPS ******/
 					Config.toggleGroups();
@@ -626,13 +678,15 @@ public class jTodo {
 					// And now print our list
 					List.print(date);
 					break;
-
-				case "-completed":
 					
 /****** PRINT COMPLETED ******/
+				case "-completed":
+/****** PRINT COMPLETED ******/
+					
 					List.printCompleted(date);
 					break;
 					
+/******* INVALID *******/
 				default:
 /******* INVALID *******/
 					System.out.println("Invalid task!");
