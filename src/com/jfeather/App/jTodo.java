@@ -338,18 +338,22 @@ public class jTodo {
 						}
 						
 						// We want to cap off the number of completed tasks at 10
-						int completedLength = 10;
+						int completedLength = Math.min(read[1].length + 1, 10);
 						
-						if (read[1].length < completedLength) {
-							completedLength = read[1].length + 1;
-						}
-						
-						System.out.println(completedLength);
+						//System.out.println(read[1].length);
 						
 						String[] completedTasks = new String[completedLength];
-						// We want to copy all of the old tasks except the oldest one (which is the first one)
-						for (int j = 0; j < completedLength - 1; j++) {
-							completedTasks[j] = read[1][j+1].toString();
+						
+						// We want to copy all of the old tasks except the oldest one (which is the first one) if there are already 10 completed tasks
+						if (completedLength == 10) {
+							for (int j = 0; j < completedLength - 1; j++) {
+								completedTasks[j] = read[1][j+1].toString();
+							}
+						} else {
+							// Otherwise, we just copy them over without an offset
+							for (int j = 0; j < completedLength - 1; j++) {
+								completedTasks[j] = read[1][j].toString();
+							}
 						}
 						
 						read[0][index].setDone(date.get(Calendar.DAY_OF_YEAR));
@@ -365,7 +369,7 @@ public class jTodo {
 						
 					} catch (Exception ex) {
 						System.out.println("Invalid task index!");
-						//ex.printStackTrace();
+						ex.printStackTrace();
 					}
 					
 					break;
@@ -425,17 +429,17 @@ public class jTodo {
 						foundIndex = true;
 						//Task[][] tasks = List.read(false);
 						
-						System.out.println(Arrays.toString(args));
+						//System.out.println(Arrays.toString(args));
 						
 						
 						foundExtension = true;
 						
-						System.out.println(read[0][index].toString());
-						System.out.println(extension);
+						//System.out.println(read[0][index].toString());
+						//System.out.println(extension);
 						
 						read[0][index].extendDueDate(date.get(Calendar.DAY_OF_YEAR), extension);
 						
-						System.out.println(read[0][index].toString());
+						//System.out.println(read[0][index].toString());
 						
 						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 						System.out.println("Task extended!");
