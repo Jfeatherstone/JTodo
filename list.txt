@@ -5,7 +5,6 @@
 # Todo tasks:
 !Active!
 Some task /79/-1/Group
-Some task /79/-1/Group
 !Active!
 
 # The config settings for jTodo
@@ -14,14 +13,5 @@ Some task /79/-1/Group
 :enable_groups=true # Possible values: true or 1 will enable, while false or 0 will disable
 
 !Completed!
-Setup rofi with previous config file /-1/174/Todo
-Setup vpn /-1/174/Todo
-Find a good background /-1/174/Todo
-Import cpp, java, and python workspaces from old files /-1/174/Programming
-Setup python to have numpy, matplotlib, and scipy /-1/183/Programming
-Find headshot photo for HSV bulletin board /-1/184/Todo
-Configure vim /-1/194/Todo
-Setup theme and plugins for vscode and eclipse /-1/194/Programming
-A third task4 /-1/28/group2
-Find articles on Nature Communications for meeting /30/28/Research
+Some task /79/28/Group
 !Completed!
