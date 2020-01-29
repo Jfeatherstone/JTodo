@@ -10,7 +10,7 @@
 
 configDir="/home/$USER/.config/jTodo/"
 if [ ! -d "$configDir" ]; then
-		mkdir -p "$configDir"
+    mkdir -p "$configDir"
 fi
 
 # Move the already compiled jar to the proper location
@@ -28,10 +28,10 @@ cd \$OLDPWD
 " >> todo
 
 # Now move the file to /usr/bin so it can be run
-sudo mv todo /usr/bin/todo
+mv todo /usr/bin/todo
 
 # Now allow everyone to execute the file
-chmod u+x,g+x,o+x /usr/bin/todo
+chmod +x /usr/bin/todo
 
 # Now create the uninstall script
 touch uninstall.sh
@@ -42,7 +42,7 @@ echo \"Config folder and command removed! If you added todo to your bashrc or zs
 " >> uninstall.sh
 
 # Now allow it to be executed by anyone
-chmod u+x,g+x,o+x uninstall.sh
+chmod +x uninstall.sh
 
 # Now tell the user the process is done
 echo "Installation completed successfully, deleteing install file now..."
