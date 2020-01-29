@@ -21,7 +21,7 @@ public class jTodo {
 	public enum ColorMode {BY_DATE, BY_GROUP, RAINBOW};
 	
 	public static final String FILE_PATH = "list.txt";
-	public static final double VERSION = 2.0;
+	public static final double VERSION = 2.1;
 	
 	/*
 	 * AVAILABLE OPTIONS
@@ -376,6 +376,7 @@ public class jTodo {
 /****** EXTEND *******/
 					boolean foundIndex = false;
 					boolean foundExtension = false;
+					int extension = -1;
 					index = -1;
 					
 					read = List.read(false);
@@ -400,7 +401,9 @@ public class jTodo {
 									break;
 								}
 							}
-														
+										
+							extension = (Integer.parseInt(args[3]));
+							
 							// Now we have to search through our other list to find the proper index
 							k = 0;
 							for (Task t: read[0]) {
@@ -414,18 +417,26 @@ public class jTodo {
 						} else {
 							// Otherwise we can just grab the one index and remove that entry
 							index = Integer.parseInt(args[1]);
+							extension = (Integer.parseInt(args[2]));
 						}
 						
-						System.out.println("Found index");
+						//System.out.println("Found index");
 						
 						foundIndex = true;
 						//Task[][] tasks = List.read(false);
 						
-						int extension = (Integer.parseInt(args[2]));
+						System.out.println(Arrays.toString(args));
+						
+						
 						foundExtension = true;
 						
+						System.out.println(read[0][index].toString());
+						System.out.println(extension);
+						
 						read[0][index].extendDueDate(date.get(Calendar.DAY_OF_YEAR), extension);
-												
+						
+						System.out.println(read[0][index].toString());
+						
 						List.write(List.taskToStringArr(read[0]), List.taskToStringArr(read[1]));
 						System.out.println("Task extended!");
 						

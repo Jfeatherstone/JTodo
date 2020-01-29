@@ -57,8 +57,13 @@ public class Task {
 	public void extendDueDate(int currentDay, int numDays) {
 		if (yearDayDue == -1)
 			yearDayDue = currentDay + numDays;
-		else
-			yearDayDue += numDays;
+		else {
+			// If the user specifies the date such that the new due date would be in the past, we just remove it altogether
+			if (yearDayDue - currentDay + numDays < 0)
+				yearDayDue = -1;
+			else
+				yearDayDue += numDays;
+		}
 	}
 	
 	public int getYearDayDue() {

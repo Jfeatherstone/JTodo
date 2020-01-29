@@ -4,7 +4,20 @@
 
 # Todo tasks:
 !Active!
-Some task /79/-1/Group
+Run the rest of G squared data /-1/-1/Research
+Practice piano /-1/-1/School
+Piano composition /-1/-1/School
+Update theme github and scripts to use kitty (and everything else) /-1/-1/Computer
+Write up LEAP seminar plan /-1/-1/HSV
+Quantum homework /31/-1/School
+Coordinate more stuff for LEAP practice sessions /-1/-1/HSV
+Write up style guide on how to submit attendance records /-1/-1/HSV
+Add functionality to download attendance files for VP system /-1/-1/HSV
+Make conky not a mess, or find something better /-1/-1/Computer
+Acutally learn how to use vim /-1/-1/Computer
+Find articles on Nature Communications for meeting /30/-1/Research
+Fix extend option /-1/-1/jTodo
+Some task /79/28/Group
 !Active!
 
 # The config settings for jTodo
