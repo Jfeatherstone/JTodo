@@ -28,7 +28,7 @@ $ todo --completed                        # Print the ten most recently complete
 ```
 
 ## [Installation]
-Download the [latest release](https://github.com/Jfeatherstone/jTodo/releases/tag/2.0) and unzip it to the directory of your choice. Run the install script (make sure you don't move the jar file into a different directory from the script) which should delete itself afterwards (currently disabled for testing, you can just delete the install script afterwards).
+Download the [latest release](https://github.com/Jfeatherstone/jTodo/releases) and unzip it to the directory of your choice. Run the install script (make sure you don't move the jar file into a different directory from the script) which should delete itself afterwards (currently disabled for testing, you can just delete the install script afterwards).
 ```
 unzip jTodo.zip && ./install.sh
 ```

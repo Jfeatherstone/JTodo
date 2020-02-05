@@ -340,13 +340,13 @@ public class jTodo {
 						// We want to cap off the number of completed tasks at 10
 						int completedLength = Math.min(read[1].length + 1, 10);
 						
-						//System.out.println(read[1].length);
+						//System.out.println(completedLength);
 						
 						String[] completedTasks = new String[completedLength];
 						
 						// We want to copy all of the old tasks except the oldest one (which is the first one) if there are already 10 completed tasks
-						if (completedLength == 10) {
-							for (int j = 0; j < completedLength - 1; j++) {
+						if (read[1].length == 10) {
+							for (int j = 0; j < read[1].length - 1; j++) {
 								completedTasks[j] = read[1][j+1].toString();
 							}
 						} else {
@@ -359,6 +359,8 @@ public class jTodo {
 						read[0][index].setDone(date.get(Calendar.DAY_OF_YEAR));
 						completedTasks[completedTasks.length - 1] = read[0][index].toString();
 						
+						//System.out.println(Arrays.toString(completedTasks));
+						
 						List.write(newTasks, completedTasks);
 							
 						
@@ -369,7 +371,7 @@ public class jTodo {
 						
 					} catch (Exception ex) {
 						System.out.println("Invalid task index!");
-						//ex.printStackTrace();
+						ex.printStackTrace();
 					}
 					
 					break;

@@ -4,27 +4,35 @@
 
 # Todo tasks:
 !Active!
-Run the rest of G squared data /-1/-1/Research
-Practice piano /-1/-1/School
-Piano composition /-1/-1/School
-Update theme github and scripts to use kitty (and everything else) /-1/-1/Computer
-Write up LEAP seminar plan /-1/-1/HSV
-Quantum homework /31/-1/School
-Coordinate more stuff for LEAP practice sessions /-1/-1/HSV
-Write up style guide on how to submit attendance records /-1/-1/HSV
+Coordinate more stuff for LEAP practice sessions /34/-1/HSV
 Add functionality to download attendance files for VP system /-1/-1/HSV
-Find articles on Nature Communications for meeting /30/-1/Research
-Fix extend option /18/-1/jTodo
-Some task /79/28/Group
+Make conky not a mess, or find something better /-1/-1/Computer
+Acutally learn how to use vim /-1/-1/Computer
+Fix EMPANADA hot mess express /-1/-1/Research
+Make tasks that are due sooner be put at the top of each list /-1/-1/jTodo
+Find articles on Nature Communications for meeting /44/-1/Research
+Make sheet parser more versatile in terms of reading fields (and add error messages) /-1/-1/HSV
+Create graphs for the rest of EMPANADA data /34/-1/Research
+Write up symposium synopsis to go over next team meeting /41/-1/HSV
+Fix bug thats giving invalid task index for -r 4 2 when there is an element there /-1/-1/jTodo
+Come up with some trends about the graphs /41/-1/Research
+Setup zathura with pywal theme /-1/-1/Computer
 !Active!
 
 # The config settings for jTodo
-:enable_color=false # Possible values: true or 1 will enable, while false or 0 will disable
+:enable_color=true # Possible values: true or 1 will enable, while false or 0 will disable
 # Enabling groups will display the current tasks in group form (which is specified by todo -a <task> <-g <group>>
 :enable_groups=true # Possible values: true or 1 will enable, while false or 0 will disable
 
 !Completed!
-Some task /79/28/Group
-Make conky not a mess, or find something better /-1/28/Computer
-Acutally learn how to use vim /-1/28/Computer
+Find articles on Nature Communications for meeting /30/29/Research
+Write up LEAP seminar plan /31/29/HSV
+Install new fan motor /-1/30/Research
+Write up style guide on how to submit attendance records /-1/31/HSV
+Quantum homework /31/31/School
+Update theme github and scripts to use kitty (and everything else) /-1/31/Computer
+Practice piano /-1/35/School
+Piano composition /34/35/School
+GR homework /35/35/School
+E&M homework /36/35/School
 !Completed!
