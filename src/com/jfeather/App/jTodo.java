@@ -116,7 +116,7 @@ public class jTodo {
 				case "a": 
 /****** ADD *******/
 					
-					// Iterate until we hit -d or the end of the args
+					// Iterate until we hit -d, -g, or the end of the args
 					String todoTask = "";
 					int i = 1;
 					

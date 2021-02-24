@@ -24,7 +24,7 @@ touch todo
 echo "
 cd /home/$USER/.config/jTodo/
 java -jar jTodo.jar \$@
-cd \$OLDPWD
+cd \"\$OLDPWD\"
 " >> todo
 
 # Now move the file to /usr/bin so it can be run

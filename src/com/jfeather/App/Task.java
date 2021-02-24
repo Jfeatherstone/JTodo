@@ -3,7 +3,7 @@ package com.jfeather.App;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Task {
+public class Task implements Comparable<Task> {
 	
 	public static final String DEFAULT_GROUP = "Todo";
 	
@@ -177,5 +177,12 @@ public class Task {
 	@Override
 	public String toString() {
 		return description + "/" + yearDayDue + "/" + yearDayDone + "/" + group;
+	}
+
+	@Override
+	public int compareTo(Task t1) {
+		// The -1 makes it sort in descending order when Arrays.sort is called
+		// ie. tasks due sooner are shown at the top
+		return -1*(this.getYearDayDue() - t1.getYearDayDue());
 	}
 }

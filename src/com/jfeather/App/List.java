@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -143,11 +145,19 @@ public class List {
 			for (int i = 0; i < arr.length; i++) {
 				arr[i] = new Task(lines.get(i));
 			}
-			
+
+			// Now sort the list by recency, so that way this order will be carried
+			// into the various printing tasks (for more info, see the implementation of
+			// compareTo in the Task class
+			Arrays.sort(arr);
+						
 			Task[] completedArr = new Task[completedLines.size()];
 			for (int i = 0; i < completedArr.length; i++) {
 				completedArr[i] = new Task(completedLines.get(i));
 			}
+			
+			// Also sort this one
+			Arrays.sort(completedArr);
 			
 			br.close();
 			
