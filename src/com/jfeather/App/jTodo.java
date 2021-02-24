@@ -21,7 +21,7 @@ public class jTodo {
 	public enum ColorMode {BY_DATE, BY_GROUP, RAINBOW};
 	
 	public static final String FILE_PATH = "list.txt";
-	public static final double VERSION = 2.1;
+	public static final double VERSION = 2.2;
 	
 	/*
 	 * AVAILABLE OPTIONS
